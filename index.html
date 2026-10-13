@@ -1,0 +1,1768 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>КлипМастер — бесплатная школа ИИ-клипов</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/unbounded/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/manrope/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/jetbrains-mono/index.css">
+<style>
+:root{
+  --bg:#07070f;--bg2:#0d0d1c;--card:rgba(255,255,255,.045);--card2:rgba(255,255,255,.07);
+  --line:rgba(255,255,255,.10);--txt:#eef0ff;--mut:#9a9fc4;
+  --v:#8b5cf6;--c:#22d3ee;--p:#f472b6;--g:#34d399;--y:#fbbf24;
+  --r:18px;--f-disp:'Unbounded Variable',system-ui,sans-serif;--f-body:'Manrope Variable',system-ui,sans-serif;--f-mono:'JetBrains Mono Variable',ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.bgfx{position:fixed;inset:0;z-index:-2;background:
+  radial-gradient(900px 600px at 12% -5%,rgba(139,92,246,.30),transparent 60%),
+  radial-gradient(800px 600px at 95% 10%,rgba(34,211,238,.20),transparent 60%),
+  radial-gradient(700px 700px at 50% 110%,rgba(244,114,182,.16),transparent 60%),
+  linear-gradient(180deg,#07070f,#0a0a16 40%,#07070f)}
+.bgfx::after{content:'';position:absolute;inset:0;opacity:.35;
+  background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+  background-size:52px 52px;mask-image:radial-gradient(circle at 50% 30%,#000,transparent 75%)}
+.topline{position:fixed;top:0;left:0;height:3px;width:100%;z-index:60;background:rgba(255,255,255,.06)}
+.topline i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--c),var(--v),var(--p));box-shadow:0 0 14px rgba(139,92,246,.8);transition:width .5s cubic-bezier(.2,.8,.2,1)}
+header.top{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:16px;padding:12px 22px;
+  background:rgba(7,7,15,.72);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:11px;font-family:var(--f-disp);font-weight:700;font-size:18px;letter-spacing:-.4px}
+.logo .mark{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(140deg,var(--v),var(--c));box-shadow:0 8px 22px rgba(139,92,246,.45)}
+.logo small{display:block;font-family:var(--f-body);font-weight:500;font-size:10.5px;color:var(--mut);letter-spacing:.6px;text-transform:uppercase}
+.top-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.pct{font-family:var(--f-mono);font-size:12.5px;color:var(--mut)}
+.pct b{color:var(--txt)}
+.layout{display:grid;grid-template-columns:264px minmax(0,1fr);gap:26px;max-width:1440px;margin:0 auto;padding:26px 22px 90px}
+nav.side{position:sticky;top:76px;align-self:start;display:flex;flex-direction:column;gap:6px;background:var(--card);
+  border:1px solid var(--line);border-radius:var(--r);padding:14px;backdrop-filter:blur(10px)}
+.nav-title{font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--mut);padding:6px 10px 8px}
+.nav-i{display:flex;align-items:center;gap:11px;padding:10px 11px;border-radius:12px;cursor:pointer;color:var(--mut);
+  font-weight:600;font-size:14px;border:1px solid transparent;transition:.22s;user-select:none}
+.nav-i .n{width:24px;height:24px;flex:none;border-radius:8px;display:grid;place-items:center;font-family:var(--f-mono);font-size:11.5px;
+  background:rgba(255,255,255,.07);color:var(--txt);border:1px solid var(--line)}
+.nav-i:hover{background:var(--card2);color:var(--txt)}
+.nav-i.on{background:linear-gradient(100deg,rgba(139,92,246,.28),rgba(34,211,238,.14));color:#fff;border-color:rgba(139,92,246,.45)}
+.nav-i.done .n{background:linear-gradient(140deg,var(--g),#0ea5a4);border-color:transparent;color:#04120c}
+main{min-width:0}
+.page{display:none;animation:fade .45s ease}.page.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.hero{position:relative;border:1px solid var(--line);border-radius:26px;overflow:hidden;
+  background:linear-gradient(140deg,rgba(139,92,246,.20),rgba(34,211,238,.08) 55%,rgba(244,114,182,.14));padding:38px 34px}
+.hero h1{font-family:var(--f-disp);font-size:clamp(28px,4.4vw,46px);line-height:1.12;margin:14px 0 12px;letter-spacing:-1px}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--c),var(--v),var(--p));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:66ch;color:#dfe2ff;font-size:17px}
+.tag{display:inline-flex;align-items:center;gap:7px;padding:6px 13px;border-radius:999px;font-size:12px;font-weight:700;
+  background:rgba(255,255,255,.09);border:1px solid var(--line);color:#dfe2ff;letter-spacing:.3px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--g);box-shadow:0 0 0 4px rgba(52,211,153,.2);animation:pulse 2s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 8px rgba(52,211,153,0)}}
+.btnrow{display:flex;flex-wrap:wrap;gap:11px;margin-top:22px}
+.btn{font-family:var(--f-body);font-weight:700;font-size:14px;padding:11px 18px;border-radius:12px;cursor:pointer;
+  border:1px solid var(--line);background:var(--card2);color:var(--txt);transition:.2s;display:inline-flex;align-items:center;gap:8px}
+.btn:hover{transform:translateY(-2px);background:rgba(255,255,255,.12)}
+.btn.pri{background:linear-gradient(120deg,var(--v),#6d28d9 60%,var(--c));border-color:transparent;color:#fff;box-shadow:0 10px 26px rgba(139,92,246,.4)}
+.btn.pri:hover{box-shadow:0 14px 34px rgba(139,92,246,.55)}
+.btn.sm{padding:7px 12px;font-size:12.5px;border-radius:10px}
+.btn.ok{border-color:rgba(52,211,153,.4);color:#a7f3d0}
+.eqart{position:absolute;right:-10px;top:0;height:100%;width:min(420px,44%);opacity:.85;pointer-events:none}
+@media(max-width:900px){.eqart{display:none}}
+h2.sec{font-family:var(--f-disp);font-size:clamp(22px,3vw,31px);letter-spacing:-.7px;margin:0 0 6px;display:flex;align-items:center;gap:12px}
+.stepbadge{font-family:var(--f-mono);font-size:12px;padding:5px 10px;border-radius:9px;background:rgba(139,92,246,.22);border:1px solid rgba(139,92,246,.4);color:#ddd6fe}
+.lead{color:var(--mut);max-width:78ch;margin:0 0 22px}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;backdrop-filter:blur(8px);transition:.25s}
+.card:hover{border-color:rgba(139,92,246,.35)}
+.card h3{font-family:var(--f-disp);font-size:16.5px;margin:0 0 10px;letter-spacing:-.3px;display:flex;gap:9px;align-items:center}
+.card h4{font-size:13.5px;margin:16px 0 8px;text-transform:uppercase;letter-spacing:1px;color:var(--mut)}
+.card p,.card li{font-size:14.4px;color:#d5d8f2}
+ul.tick{list-style:none;padding:0;margin:8px 0}
+ul.tick li{position:relative;padding-left:26px;margin-bottom:8px}
+ul.tick li::before{content:'';position:absolute;left:2px;top:7px;width:12px;height:12px;border-radius:4px;
+  background:linear-gradient(140deg,var(--v),var(--c));box-shadow:0 0 10px rgba(139,92,246,.6)}
+.ico{width:34px;height:34px;flex:none;border-radius:11px;display:grid;place-items:center;background:rgba(255,255,255,.07);
+  border:1px solid var(--line);font-weight:700;font-size:14px;color:#c4b5fd}
+.chk{display:flex;gap:11px;align-items:flex-start;padding:11px 13px;border-radius:12px;border:1px solid var(--line);
+  background:rgba(255,255,255,.03);margin-bottom:9px;cursor:pointer;transition:.2s;font-size:14.3px}
+.chk:hover{background:rgba(255,255,255,.07)}
+.chk input{appearance:none;width:21px;height:21px;flex:none;border-radius:7px;border:2px solid rgba(255,255,255,.28);cursor:pointer;margin:1px 0 0;transition:.2s;position:relative}
+.chk input:checked{background:linear-gradient(140deg,var(--g),#0ea5a4);border-color:transparent}
+.chk input:checked::after{content:'';position:absolute;left:6px;top:2px;width:5px;height:10px;border:solid #04120c;border-width:0 2.4px 2.4px 0;transform:rotate(42deg)}
+.chk.done{border-color:rgba(52,211,153,.35);background:rgba(52,211,153,.07)}
+.chk.done span{color:#b9c6d8;text-decoration:line-through;text-decoration-color:rgba(185,198,216,.4)}
+label.f{display:block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.9px;color:var(--mut);margin:14px 0 6px}
+select,input[type=text],input[type=number],textarea{width:100%;padding:11px 13px;border-radius:12px;background:rgba(6,6,16,.65);
+  border:1px solid var(--line);color:var(--txt);font-family:var(--f-body);font-size:14.3px;outline:none;transition:.2s}
+select:focus,input:focus,textarea:focus{border-color:rgba(139,92,246,.65);box-shadow:0 0 0 3px rgba(139,92,246,.18)}
+textarea{resize:vertical;line-height:1.65}
+.row{display:grid;gap:13px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.chip{padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.04);
+  font-size:12.6px;font-weight:700;cursor:pointer;color:var(--mut);transition:.18s;user-select:none}
+.chip:hover{color:var(--txt);border-color:rgba(139,92,246,.5)}
+.chip.on{background:linear-gradient(120deg,rgba(139,92,246,.45),rgba(34,211,238,.3));color:#fff;border-color:rgba(139,92,246,.6)}
+.out{background:rgba(4,4,12,.75);border:1px solid rgba(139,92,246,.3);border-radius:14px;padding:15px;margin-top:14px}
+.out pre{margin:0;white-space:pre-wrap;word-break:break-word;font-family:var(--f-mono);font-size:13px;color:#dbeafe;line-height:1.6}
+.pill{display:inline-block;padding:3px 9px;border-radius:7px;font-family:var(--f-mono);font-size:11px;border:1px solid var(--line);background:rgba(255,255,255,.06)}
+.note{border-left:3px solid var(--y);background:rgba(251,191,36,.08);padding:12px 15px;border-radius:0 12px 12px 0;margin:14px 0;font-size:14px}
+.note.good{border-color:var(--g);background:rgba(52,211,153,.08)}
+.note.info{border-color:var(--c);background:rgba(34,211,238,.08)}
+.note.warn{border-color:var(--p);background:rgba(244,114,182,.09)}
+.note b{color:#fff}
+table{width:100%;border-collapse:collapse;font-size:13.6px;margin-top:8px}
+th,td{text-align:left;padding:10px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--mut)}
+tbody tr:hover{background:rgba(255,255,255,.04)}
+.tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.tab{padding:8px 14px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.04);cursor:pointer;font-size:13px;font-weight:700;color:var(--mut)}
+.tab.on{background:rgba(139,92,246,.25);border-color:rgba(139,92,246,.5);color:#fff}
+.tabc{display:none}.tabc.on{display:block;animation:fade .3s}
+.scene{border:1px solid var(--line);border-radius:15px;background:rgba(255,255,255,.035);padding:15px;margin-bottom:13px;transition:.25s}
+.scene.flash{border-color:var(--c);box-shadow:0 0 0 3px rgba(34,211,238,.18)}
+.scene-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:9px}
+.snum{width:30px;height:30px;flex:none;border-radius:9px;display:grid;place-items:center;font-family:var(--f-mono);font-size:12px;
+  background:linear-gradient(140deg,var(--v),var(--c));color:#0b0616;font-weight:700}
+.lyr{font-size:14.6px;font-weight:600;color:#fff}
+.lyr .syl{color:var(--mut);font-family:var(--f-mono);font-size:11.5px;font-weight:500}
+.sect-tag{font-family:var(--f-mono);font-size:11px;padding:3px 9px;border-radius:7px;background:rgba(244,114,182,.18);color:#fbcfe8;border:1px solid rgba(244,114,182,.3)}
+.tl{display:flex;gap:3px;align-items:stretch;height:56px;margin:14px 0 6px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:rgba(0,0,0,.4)}
+.tlseg{position:relative;cursor:pointer;min-width:14px;display:grid;place-items:center;font-family:var(--f-mono);font-size:10.5px;color:#08060f;font-weight:700;transition:.2s;overflow:hidden}
+.tlseg:hover{filter:brightness(1.25)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--mut);margin-bottom:10px}
+.stat{display:flex;gap:14px;flex-wrap:wrap;margin:12px 0}
+.stat div{flex:1 1 130px;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:13px;padding:12px 14px}
+.stat b{display:block;font-family:var(--f-disp);font-size:22px;letter-spacing:-.6px}
+.stat span{font-size:11.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.8px}
+.stat b.g{color:var(--g)}.stat b.y{color:var(--y)}.stat b.r{color:#fca5a5}
+.vw{background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:14px;padding:14px;font-family:var(--f-mono);
+  font-size:12.6px;white-space:pre-wrap;max-height:320px;overflow:auto;line-height:1.85}
+.vw .v{color:#fde68a;cursor:pointer;border-bottom:1px dashed rgba(253,230,138,.5)}
+.vw .v.acc{color:#7dd3fc;background:rgba(125,211,252,.16);border-radius:4px;border-bottom:none;font-weight:700}
+.q{border:1px solid var(--line);border-radius:15px;padding:17px;background:rgba(255,255,255,.035);margin-bottom:13px}
+.q h4{margin:0 0 11px;font-size:15.4px;font-family:var(--f-body);text-transform:none;letter-spacing:0;color:#fff}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;border-radius:11px;border:1px solid var(--line);margin-bottom:7px;cursor:pointer;font-size:14px;transition:.18s}
+.opt:hover{background:rgba(255,255,255,.06)}
+.opt input{appearance:none;width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,.3);flex:none;margin-top:2px;cursor:pointer;transition:.2s}
+.opt input:checked{border-color:var(--v);background:radial-gradient(circle,var(--v) 42%,transparent 46%)}
+.opt.right{border-color:rgba(52,211,153,.55);background:rgba(52,211,153,.10)}
+.opt.wrong{border-color:rgba(248,113,113,.55);background:rgba(248,113,113,.10)}
+.exp{display:none;margin-top:9px;font-size:13.6px;color:#cfe3ff;background:rgba(34,211,238,.08);border-left:3px solid var(--c);padding:10px 13px;border-radius:0 10px 10px 0}
+.exp.on{display:block}
+/* --- карточки сервисов: кликабельные --- */
+.tool{display:flex;align-items:flex-start;gap:12px;padding:13px;border:1px solid var(--line);border-radius:14px;
+  background:rgba(255,255,255,.035);transition:.2s;cursor:pointer;position:relative}
+.tool:hover{transform:translateY(-2px);border-color:rgba(34,211,238,.55);background:rgba(34,211,238,.07)}
+.tool:active{transform:translateY(0)}
+.tool a{color:#a5f3fc;font-weight:700;text-decoration:none;font-size:14.6px}
+.tool a:hover{text-decoration:underline}
+.tool small{display:block;color:var(--mut);font-size:12.4px;line-height:1.45}
+.tool .dom{display:block;font-family:var(--f-mono);font-size:11px;color:#7dd3fc;opacity:.8;margin-top:4px;word-break:break-all}
+.tool .go{position:absolute;top:11px;right:11px;font-size:12px;color:var(--mut);transition:.2s}
+.tool:hover .go{color:var(--c);transform:translate(2px,-2px)}
+.free{font-family:var(--f-mono);font-size:10.5px;padding:4px 8px;border-radius:7px;background:rgba(52,211,153,.16);
+  color:#a7f3d0;border:1px solid rgba(52,211,153,.3);white-space:nowrap;margin-left:auto;flex:none}
+#toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,90px);z-index:99;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none}
+.tst{background:rgba(20,20,38,.96);border:1px solid rgba(139,92,246,.5);color:#fff;padding:11px 20px;border-radius:12px;
+  font-size:13.6px;font-weight:600;box-shadow:0 16px 40px rgba(0,0,0,.55);opacity:0;transition:.3s}
+.tst.show{opacity:1;transform:translateY(-6px)}
+.modal{position:fixed;inset:0;z-index:120;background:rgba(4,4,12,.78);backdrop-filter:blur(7px);display:none;place-items:center;padding:20px}
+.modal.on{display:grid;animation:fade .25s}
+.modal-box{max-width:540px;width:100%;background:linear-gradient(160deg,#161632,#0e0e1e);border:1px solid rgba(139,92,246,.45);
+  border-radius:22px;padding:26px;box-shadow:0 30px 90px rgba(0,0,0,.7)}
+.modal-box h3{font-family:var(--f-disp);font-size:18px;margin:0 0 8px;letter-spacing:-.4px}
+.modal-box p{color:var(--mut);font-size:14px;margin:0 0 14px}
+.modal-box input{font-family:var(--f-mono);font-size:13px;color:#a5f3fc}
+.foot{margin-top:34px;padding:22px;border-top:1px solid var(--line);color:var(--mut);font-size:13px;text-align:center}
+@media(max-width:1000px){
+  .layout{grid-template-columns:1fr;padding:18px 14px 70px}
+  nav.side{position:static;flex-direction:row;overflow-x:auto;padding:9px;gap:7px}
+  .nav-title{display:none}.nav-i{white-space:nowrap;padding:9px 12px}
+  .hero{padding:26px 20px}
+}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:rgba(255,255,255,.03)}
+::-webkit-scrollbar-thumb{background:rgba(139,92,246,.4);border-radius:8px}
+::-webkit-scrollbar-thumb:hover{background:rgba(139,92,246,.65)}
+.reveal{opacity:0;transform:translateY(20px)}
+.reveal.in{opacity:1;transform:none;transition:opacity .6s ease,transform .6s cubic-bezier(.2,.8,.2,1)}
+.kbd{font-family:var(--f-mono);font-size:12px;background:rgba(255,255,255,.09);border:1px solid var(--line);border-radius:6px;padding:2px 7px}
+</style>
+</head>
+<body>
+<div class="bgfx"></div>
+<div class="topline"><i id="topbar"></i></div>
+
+<header class="top">
+  <div class="logo">
+    <div class="mark"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M4 14v-4M8 18V6M12 21V3M16 17V7M20 14v-4" stroke="#fff" stroke-width="2.1" stroke-linecap="round"/></svg></div>
+    <div>КлипМастер<small>школа бесплатных ИИ-клипов</small></div>
+  </div>
+  <div class="top-right">
+    <span class="pct">Готовность: <b id="pctTxt">0%</b></span>
+    <button class="btn sm" id="exportAll">⬇ План проекта</button>
+    <button class="btn sm" id="resetBtn" title="Сбросить прогресс">↺</button>
+  </div>
+</header>
+
+<div class="layout">
+<nav class="side" id="nav">
+  <div class="nav-title">Обучение</div>
+  <div class="nav-i on" data-go="overview"><span class="n">◎</span>Обзор курса</div>
+  <div class="nav-i" data-go="step1" data-step="step1"><span class="n">1</span>Текст песни</div>
+  <div class="nav-i" data-go="step2" data-step="step2"><span class="n">2</span>Песня в Suno</div>
+  <div class="nav-i" data-go="step3" data-step="step3"><span class="n">3</span>Кадры-изображения</div>
+  <div class="nav-i" data-go="step4" data-step="step4"><span class="n">4</span>Оживление кадров</div>
+  <div class="nav-i" data-go="step5" data-step="step5"><span class="n">5</span>Монтаж клипа</div>
+  <div class="nav-title">Практика</div>
+  <div class="nav-i" data-go="checklist"><span class="n">✓</span>Чек-лист проекта</div>
+  <div class="nav-i" data-go="quiz"><span class="n">?</span>Тест знаний</div>
+  <div class="nav-i" data-go="tools"><span class="n">⚙</span>Бесплатные сервисы</div>
+</nav>
+
+<main>
+
+<!-- ================= OVERVIEW ================= -->
+<section class="page on" id="page-overview">
+  <div class="hero reveal">
+    <svg class="eqart" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      <defs>
+        <linearGradient id="ga" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient>
+        <linearGradient id="gb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f472b6"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient>
+      </defs>
+      <g opacity=".9">
+        <rect x="150" y="120" width="14" height="60" rx="7" fill="url(#ga)"><animate attributeName="height" values="60;130;45;95;60" dur="1.8s" repeatCount="indefinite"/><animate attributeName="y" values="120;85;128;102;120" dur="1.8s" repeatCount="indefinite"/></rect>
+        <rect x="172" y="95" width="14" height="110" rx="7" fill="url(#gb)"><animate attributeName="height" values="110;50;150;80;110" dur="2.2s" repeatCount="indefinite"/><animate attributeName="y" values="95;125;75;110;95" dur="2.2s" repeatCount="indefinite"/></rect>
+        <rect x="194" y="70" width="14" height="160" rx="7" fill="url(#ga)"><animate attributeName="height" values="160;90;180;120;160" dur="1.5s" repeatCount="indefinite"/><animate attributeName="y" values="70;105;60;90;70" dur="1.5s" repeatCount="indefinite"/></rect>
+        <rect x="216" y="100" width="14" height="100" rx="7" fill="url(#gb)"><animate attributeName="height" values="100;150;60;120;100" dur="2s" repeatCount="indefinite"/><animate attributeName="y" values="100;75;120;90;100" dur="2s" repeatCount="indefinite"/></rect>
+        <rect x="238" y="130" width="14" height="40" rx="7" fill="url(#ga)"><animate attributeName="height" values="40;100;55;130;40" dur="1.7s" repeatCount="indefinite"/><animate attributeName="y" values="130;100;122;85;130" dur="1.7s" repeatCount="indefinite"/></rect>
+      </g>
+      <g opacity=".55">
+        <rect x="60" y="30" width="86" height="60" rx="8" fill="none" stroke="#22d3ee" stroke-width="1.6"/>
+        <circle cx="86" cy="52" r="9" fill="#22d3ee" opacity=".55"/>
+        <path d="M64 82 l22 -20 16 14 14 -18 16 24z" fill="#8b5cf6" opacity=".6"/>
+        <rect x="252" y="200" width="92" height="64" rx="8" fill="none" stroke="#f472b6" stroke-width="1.6"/>
+        <path d="M286 220 l22 12 -22 12z" fill="#f472b6" opacity=".8"/>
+      </g>
+    </svg>
+    <span class="tag"><span class="dot"></span> Бесплатно · 5 шагов · ~1 вечер на первый клип</span>
+    <h1>Создай музыкальный клип <em>без бюджета</em><br>на одних нейросетях</h1>
+    <p>Пошаговый тренажёр: от текста песни, который напишет нейросеть, — до готового смонтированного клипа. На каждом шаге есть генераторы промптов, чек-листы, калькулятор тайминга и экспорт плана проекта в файл.</p>
+    <div class="btnrow">
+      <button class="btn pri" data-go="step1">▶ Начать с шага 1</button>
+      <button class="btn" data-go="checklist">Открыть чек-лист</button>
+      <button class="btn" data-go="tools">Какие сервисы нужны</button>
+    </div>
+  </div>
+
+  <div class="pipe reveal" style="display:flex;flex-wrap:wrap;gap:10px;margin:20px 0">
+    <div class="card" style="flex:1 1 170px;cursor:pointer" data-go="step1"><span class="pill">ШАГ 1 · ТЕКСТ</span><h3 style="margin-top:8px">Слова песни</h3><p style="color:var(--mut);font-size:13px;margin:0">Qwen, ChatGPT, GigaChat, Алиса — под событие. Или готовые стихи поэтов.</p></div>
+    <div class="card" style="flex:1 1 170px;cursor:pointer" data-go="step2"><span class="pill">ШАГ 2 · ЗВУК</span><h3 style="margin-top:8px">Песня в Suno</h3><p style="color:var(--mut);font-size:13px;margin:0">Загружаем текст, слушаем, ловим неверные ударения и неподходящий жанр.</p></div>
+    <div class="card" style="flex:1 1 170px;cursor:pointer" data-go="step3"><span class="pill">ШАГ 3 · КАДРЫ</span><h3 style="margin-top:8px">Картинки по строчкам</h3><p style="color:var(--mut);font-size:13px;margin:0">Qwen, Алиса/Шедеврум, Jay Flow — каждая строка = свой кадр.</p></div>
+    <div class="card" style="flex:1 1 170px;cursor:pointer" data-go="step4"><span class="pill">ШАГ 4 · ДВИЖЕНИЕ</span><h3 style="margin-top:8px">Оживляем в Алисе</h3><p style="color:var(--mut);font-size:13px;margin:0">Превращаем статичные кадры в видеоклипы по 4–6 секунд.</p></div>
+    <div class="card" style="flex:1 1 170px;cursor:pointer" data-go="step5"><span class="pill">ШАГ 5 · МОНТАЖ</span><h3 style="margin-top:8px">Склеиваем и звучим</h3><p style="color:var(--mut);font-size:13px;margin:0">Бесплатный редактор: склейка + песня + титры + экспорт.</p></div>
+  </div>
+
+  <h2 class="sec reveal">Что ты получишь</h2>
+  <p class="lead reveal">Это не статья, а рабочий инструмент: заполняешь поля — получаешь готовые промпты и план клипа, который можно сохранить в файл и взять с собой в нейросети.</p>
+  <div class="grid g3">
+    <div class="card reveal"><h3><span class="ico">✍️</span>Генератор промптов</h3><p>Собирает точное задание для текстовой нейросети (событие, герои, жанр, ритм, требования к ударениям) и стиль-промпт для Suno.</p></div>
+    <div class="card reveal"><h3><span class="ico">◍</span>Разметка ударений</h3><p>Вставляешь текст — кликаешь по гласным, расставляешь ударения, видишь число слогов в каждой строке и ловишь «непоющиеся» слова.</p></div>
+    <div class="card reveal"><h3><span class="ico">🎬</span>Раскадровка по строчкам</h3><p>Текст автоматически разбивается на сцены. Для каждой — промпт картинки (RU/EN), промпт движения и длительность.</p></div>
+    <div class="card reveal"><h3><span class="ico">⏱</span>Калькулятор таймлайна</h3><p>Считает длину клипов под темп песни, рисует таймлайн и следит, чтобы видео не оказалось короче или длиннее трека.</p></div>
+    <div class="card reveal"><h3><span class="ico">✓</span>Чек-листы и тест</h3><p>Прогресс сохраняется в браузере: видно, что уже сделано. В конце — тест из 8 вопросов на закрепление.</p></div>
+    <div class="card reveal"><h3><span class="ico">⬇</span>Экспорт плана</h3><p>Одной кнопкой — текстовый файл со всеми промптами, сценами, таймингом, чек-листом и адресами сервисов.</p></div>
+  </div>
+
+  <h2 class="sec reveal" style="margin-top:34px">Сколько это стоит</h2>
+  <div class="stat reveal">
+    <div><b class="g">0 ₽</b><span>минимальный бюджет</span></div>
+    <div><b>2–4 ч</b><span>первый клип</span></div>
+    <div><b>1–2 дня</b><span>клип «на подарок» с 15+ сценами</span></div>
+    <div><b class="y">~10 треков</b><span>бесплатный дневной лимит Suno</span></div>
+  </div>
+  <div class="note info reveal"><b>Важно про лимиты.</b> Бесплатные тарифы меняются. Перед стартом открой раздел «Бесплатные сервисы» и проверь актуальные условия каждого сайта: дневные кредиты, водяные знаки, разрешение экспорта и права на использование.</div>
+
+  <h2 class="sec reveal" style="margin-top:34px">Правила честного клипа</h2>
+  <div class="grid g2 reveal">
+    <div class="card"><h3><span class="ico">⚖️</span>Авторские права</h3>
+      <ul class="tick">
+        <li>Стихи можно брать, только если они в общественном достоянии (автор умер более 70 лет назад) или есть письменное разрешение.</li>
+        <li>В описании клипа указывай автора стихов и то, что музыка/картинки созданы нейросетями.</li>
+        <li>Не используй чужие минусовки и семплы известных песен — видео заблокируют.</li>
+      </ul>
+    </div>
+    <div class="card"><h3><span class="ico">🛡</span>Этика и здравый смысл</h3>
+      <ul class="tick">
+        <li>Не делай клипы с реальными людьми без их согласия.</li>
+        <li>Проверяй текст: нейросеть может добавить факты, которых не было.</li>
+        <li>На площадках (YouTube, VK) ставь отметку «создано с помощью ИИ», если она предусмотрена.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STEP 1 ================= -->
+<section class="page" id="page-step1" data-step="step1">
+  <h2 class="sec reveal"><span class="stepbadge">ШАГ 1</span> Текст песни</h2>
+  <p class="lead reveal">Два пути: сочинить текст нейросетью под конкретное событие или взять готовые стихи. В обоих случаях текст нужно подготовить к озвучке — проверить ритм и ударения, иначе Suno споёт «криво».</p>
+
+  <div class="tabs reveal">
+    <div class="tab on" data-tab="t1a">1 · Конструктор промпта</div>
+    <div class="tab" data-tab="t1b">2 · Разметка ударений</div>
+    <div class="tab" data-tab="t1c">3 · Стихи поэтов</div>
+    <div class="tab" data-tab="t1d">4 · Теория и чек-лист</div>
+  </div>
+
+  <div class="tabc on reveal" id="t1a">
+    <div class="grid g2">
+      <div class="card">
+        <h3><span class="ico">🧩</span>Параметры песни</h3>
+        <label class="f">Событие / повод</label>
+        <select id="ev">
+          <option>День рождения</option><option>Свадьба</option><option>Выпускной</option>
+          <option>Новый год</option><option>Признание в любви</option><option>Корпоратив / юбилей компании</option>
+          <option>Мотивация и спорт</option><option>Память о близком человеке</option>
+          <option>Детский праздник</option><option>Поздравление маме</option><option>Дружеский ролик / юмор</option>
+          <option>Путешествие и впечатления</option><option>Своё событие (напишу ниже)</option>
+        </select>
+        <label class="f">Герои, имена, детали (что обязательно должно прозвучать)</label>
+        <input type="text" id="heroes" placeholder="Например: Катя и Андрей, 10 лет вместе, любят море, кот Барсик">
+        <label class="f">Настроение</label>
+        <select id="mood">
+          <option>тёплое и трогательное</option><option>весёлое и танцевальное</option>
+          <option>лиричное, немного грустное</option><option>эпичное и вдохновляющее</option>
+          <option>ироничное, с юмором</option><option>романтичное</option><option>ностальгическое</option>
+        </select>
+        <div class="row">
+          <div><label class="f">Жанр</label>
+            <select id="genre">
+              <option>поп</option><option>поп-баллада</option><option>рок</option><option>рэп / хип-хоп</option>
+              <option>шансон</option><option>фолк</option><option>электронная танцевальная</option>
+              <option>джаз / свинг</option><option>регги</option><option>детская песня</option><option>синти-поп 80-х</option>
+            </select></div>
+          <div><label class="f">Куплетов</label><input type="number" id="verses" value="2" min="1" max="6"></div>
+          <div><label class="f">Язык</label><select id="lang"><option>русский</option><option>русский + немного английского</option><option>английский</option></select></div>
+        </div>
+        <label class="f">Длина строк (ритм)</label>
+        <select id="linelen"><option value="6-8">короткие, 6–8 слогов (легче всего петь)</option><option value="8-11">средние, 8–11 слогов</option><option value="11-14">длинные, 11–14 слогов (рэп, баллада)</option></select>
+        <label class="f">Структура</label>
+        <div class="chips" id="structChips">
+          <div class="chip on" data-v="[Intro]">Intro</div><div class="chip on" data-v="куплеты">Куплеты</div>
+          <div class="chip on" data-v="Припев (повтор 2 раза)">Припев ×2</div><div class="chip on" data-v="[Bridge]">Бридж</div>
+          <div class="chip" data-v="[Outro]">Аутро</div>
+        </div>
+        <label class="f">Дополнительные требования</label>
+        <div class="chips" id="reqChips">
+          <div class="chip on" data-v="Пиши все слова с буквой «ё» через «ё», а не «е»">буква «ё»</div>
+          <div class="chip on" data-v="Избегай скороговорок, длинных иностранных слов и сложных согласных подряд">легко петь</div>
+          <div class="chip on" data-v="Сделай припев коротким, с яркой фразой-крючком, которая повторяется">хук в припеве</div>
+          <div class="chip" data-v="Не используй избитые штампы и канцелярит">без штампов</div>
+          <div class="chip" data-v="Добавь образы, которые легко показать визуально: дорога, свет, море, город, небо">визуальные образы</div>
+          <div class="chip" data-v="После текста укажи количество слогов в каждой строке">подсчёт слогов</div>
+        </div>
+        <div class="btnrow"><button class="btn pri" id="genText">⚡ Собрать промпт</button><button class="btn" id="copyText">Копировать</button></div>
+      </div>
+      <div>
+        <div class="card">
+          <h3><span class="ico">📋</span>Готовый промпт для нейросети</h3>
+          <p style="color:var(--mut);font-size:13.4px;margin-top:0">Скопируй и вставь в Qwen, ChatGPT, GigaChat или Алису. Если результат не понравился — не переписывай заново, а допиши правки: «припев сделай короче», «убери слово X», «больше образов про море».</p>
+          <div class="out"><pre id="textOut">Нажми «Собрать промпт»…</pre></div>
+          <div class="btnrow"><button class="btn sm" id="dlText">⬇ Скачать .txt</button><button class="btn sm" id="toStep1Tool">→ В разметку ударений</button></div>
+        </div>
+        <div class="card" style="margin-top:16px">
+          <h3><span class="ico">🤖</span>Куда вставлять промпт</h3>
+          <p style="color:var(--mut);font-size:12.8px;margin-top:0">Кликни по карточке — сайт откроется в новой вкладке. Если браузер блокирует всплывающие окна, появится окно с адресом для копирования.</p>
+          <div class="grid" style="gap:9px" data-tools="text"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabc reveal" id="t1b">
+    <div class="grid g2">
+      <div class="card">
+        <h3><span class="ico">◍</span>Текст для проверки</h3>
+        <p style="color:var(--mut);font-size:13.6px;margin-top:0">Вставь текст песни. Метки вида <span class="kbd">[Припев]</span> распознаются как секции и в подсчёт строк не попадают.</p>
+        <textarea id="lyrIn" rows="12" placeholder="Вставь сюда текст песни…"></textarea>
+        <div class="btnrow">
+          <button class="btn pri" id="parseLyrics">▶ Разобрать на строки</button>
+          <button class="btn" id="loadDemo">Загрузить пример</button>
+        </div>
+        <div class="note info"><b>Режим ударений.</b> После разбора включи тумблер и кликай по жёлтым гласным — над выбранной появится знак ударения (´). Буква «ё» ударная всегда.</div>
+        <label class="chk"><input type="checkbox" id="accentMode"><span>Включить кликабельную разметку ударений</span></label>
+      </div>
+      <div class="card">
+        <h3><span class="ico">🔍</span>Разбор и ритм</h3>
+        <div class="stat">
+          <div><b id="stLines">0</b><span>строк</span></div>
+          <div><b id="stSyl">0</b><span>слогов всего</span></div>
+          <div><b id="stAvg">0</b><span>ср. слогов в строке</span></div>
+          <div><b id="stYo" class="y">0</b><span>слов с «ё»</span></div>
+        </div>
+        <div class="vw" id="accentView">Здесь появится размеченный текст.</div>
+        <div class="btnrow">
+          <button class="btn" id="copyAcc">Копировать с ударениями</button>
+          <button class="btn" id="clearAcc">Очистить ударения</button>
+          <button class="btn ok" id="accToStep2">→ Передать в Шаг 3</button>
+        </div>
+        <h4>Ритм строк (слоги)</h4>
+        <div class="vw" id="rhythmView">—</div>
+        <div class="note warn" style="margin-bottom:0"><b>Почему это важно.</b> Если в соседних строках 7 и 14 слогов, Suno либо «проглотит» слова, либо растянет их и собьёт ударение. Выровняй строки до генерации — это дешевле, чем 10 перегенераций.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabc reveal" id="t1c">
+    <div class="grid g2">
+      <div class="card"><h3><span class="ico">📚</span>Как брать готовые стихи</h3>
+        <ul class="tick">
+          <li>Проверь, что автор умер более 70 лет назад — такие тексты в общественном достоянии.</li>
+          <li>Современные поэты — только с их разрешения, лучше письменного (сообщение в мессенджере тоже подойдёт).</li>
+          <li>Стихотворение ≠ песня: часто нужно добавить повторяющийся припев, которого у поэта нет.</li>
+          <li>Попроси нейросеть: «Не меняй ни одного слова, только разбей на куплеты и припев и добавь метки структуры».</li>
+          <li>В описании клипа укажи автора и название стихотворения.</li>
+        </ul>
+      </div>
+      <div class="card"><h3><span class="ico">🧪</span>Промпт для адаптации стихов</h3>
+        <div class="out"><pre id="poemPrompt">Ты — музыкальный редактор. Вот стихотворение (автор в общественном достоянии):
+
+«ВСТАВЬ ТЕКСТ СТИХОВ»
+
+Задача:
+1. Не меняй ни одного слова автора, не добавляй свои строки.
+2. Разбей текст на части песни и добавь метки: [Intro], [Verse 1], [Chorus], [Verse 2], [Bridge], [Outro].
+3. Выбери 2–4 строки, которые лучше всего работают как припев, и повтори их в нужных местах.
+4. Все слова с «ё» напиши через «ё».
+5. Отдельно выпиши строки, где есть трудные для пения слова (скороговорки, длинные слова, стечение согласных) — предложи, где можно сделать паузу.
+6. В конце укажи количество слогов в каждой строке.</pre></div>
+        <div class="btnrow"><button class="btn sm" id="copyPoem">Копировать промпт</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabc reveal" id="t1d">
+    <div class="grid g2">
+      <div class="card"><h3><span class="ico">🎯</span>Что делает текст «поющимся»</h3>
+        <ul class="tick">
+          <li><b>Одинаковый размер</b> в куплетах: 8±1 слогов на строку.</li>
+          <li><b>Ударение на сильную долю.</b> Ударные гласные должны попадать на бит — короткие строки безопаснее.</li>
+          <li><b>Открытые слоги</b> в конце строк (на гласную) — их легче тянуть.</li>
+          <li><b>Хук в припеве:</b> 1 фраза, которая повторяется минимум 3 раза за песню.</li>
+          <li><b>Конкретика вместо абстракций:</b> не «счастье», а «свет в окне», «билет на последний автобус».</li>
+        </ul>
+      </div>
+      <div class="card"><h3><span class="ico">🚫</span>Что ломает генерацию</h3>
+        <ul class="tick">
+          <li>Слишком длинные строки (15+ слогов) — вокал начинает тараторить.</li>
+          <li>Слова с неоднозначным ударением: «за́мок / замо́к», «не́бо / небеса́».</li>
+          <li>Иностранные названия и аббревиатуры — их читают как попало.</li>
+          <li>Отсутствие меток структуры: нейросеть сама решит, где припев.</li>
+          <li>Текст «простынёй» без пустых строк между частями.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card reveal" style="margin-top:16px">
+      <h3><span class="ico">✅</span>Чек-лист шага 1</h3>
+      <label class="chk"><input type="checkbox" data-chk="s1a"><span>Выбрал повод, героев и настроение — есть о чём песня</span></label>
+      <label class="chk"><input type="checkbox" data-chk="s1b"><span>Получил 2–3 варианта текста от нейросети и выбрал лучший</span></label>
+      <label class="chk"><input type="checkbox" data-chk="s1c"><span>Проверил ритм: длина строк в куплетах примерно одинаковая</span></label>
+      <label class="chk"><input type="checkbox" data-chk="s1d"><span>Расставил ударения в спорных словах и сохранил версию с «´»</span></label>
+      <label class="chk"><input type="checkbox" data-chk="s1e"><span>Прочитал текст вслух «напевая» — язык не спотыкается</span></label>
+      <label class="chk"><input type="checkbox" data-chk="s1f"><span>Расставил метки структуры: [Intro] [Verse] [Chorus] [Bridge] [Outro]</span></label>
+      <label class="chk"><input type="checkbox" data-chk="s1g"><span>Если стихи чужие — убедился, что они в общественном достоянии или есть разрешение</span></label>
+      <div class="btnrow"><button class="btn pri" data-go="step2">Дальше: песня в Suno →</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STEP 2 ================= -->
+<section class="page" id="page-step2" data-step="step2">
+  <h2 class="sec reveal"><span class="stepbadge">ШАГ 2</span> Песня в Suno</h2>
+  <p class="lead reveal">Текст готов — превращаем его в трек. Главная работа здесь не «сгенерировать», а <b>прослушать</b>: поймать неверные ударения, неподходящий жанр и обрывы, а потом точечно починить.</p>
+
+  <div class="card reveal" style="margin-bottom:18px">
+    <h3><span class="ico">🔗</span>Открыть Suno</h3>
+    <div class="grid g2" data-tools="music" style="gap:9px"></div>
+  </div>
+
+  <div class="tabs reveal">
+    <div class="tab on" data-tab="t2a">1 · Как загрузить</div>
+    <div class="tab" data-tab="t2b">2 · Style-промпт</div>
+    <div class="tab" data-tab="t2c">3 · Прослушивание</div>
+    <div class="tab" data-tab="t2d">4 · Лечим ударения</div>
+  </div>
+
+  <div class="tabc on reveal" id="t2a">
+    <div class="grid g2">
+      <div class="card"><h3><span class="ico">🎧</span>Порядок действий на suno.com</h3>
+        <ul class="tick">
+          <li>Зарегистрируйся (почта / Google) и зайди в раздел <b>Create</b>.</li>
+          <li>Включи <b>Custom Mode</b> — иначе Suno сам придумает и текст, и стиль.</li>
+          <li>В поле <b>Lyrics</b> вставь текст вместе с метками [Intro], [Verse], [Chorus].</li>
+          <li>В поле <b>Styles of Music</b> вставь стиль-промпт из вкладки «Style-промпт».</li>
+          <li>Укажи <b>Title</b>, а лишние жанры внеси в «Exclude Styles».</li>
+          <li>Нажми <b>Create</b>: получишь 2 варианта за одну генерацию.</li>
+          <li>Понравился фрагмент? Используй <b>Extend</b> (дописать продолжение), <b>Cover</b> (тот же текст в другом стиле) или <b>Remix</b>.</li>
+          <li>Скачай готовое: <b>Download → Audio</b> (MP3, на платных тарифах — WAV).</li>
+        </ul>
+        <div class="note"><b>Лимиты.</b> На бесплатном тарифе Suno даёт около 10 песен в день и использование только в личных (некоммерческих) целях. Точные условия смотри на сайте — они меняются.</div>
+      </div>
+      <div class="card"><h3><span class="ico">🧱</span>Шаблон структуры</h3>
+        <div class="out"><pre>[Intro]
+(мягко, без слов или 1–2 коротких строки)
+
+[Verse 1]
+4 строки, одинаковый размер
+
+[Chorus]
+2–4 строки, хук повторяется
+
+[Verse 2]
+4 строки, та же мелодия, что и в Verse 1
+
+[Chorus]
+
+[Bridge]
+2 строки, смена настроения
+
+[Chorus]
+
+[Outro]
+затухание, повтор хука</pre></div>
+        <h4>Полезные управляющие метки</h4>
+        <div class="chips">
+          <span class="pill">[Intro]</span><span class="pill">[Verse]</span><span class="pill">[Pre-Chorus]</span><span class="pill">[Chorus]</span>
+          <span class="pill">[Bridge]</span><span class="pill">[Outro]</span><span class="pill">[Instrumental Break]</span>
+          <span class="pill">[Drop]</span><span class="pill">[Pause]</span><span class="pill">[Soft]</span><span class="pill">[Build Up]</span>
+          <span class="pill">[Male Vocal]</span><span class="pill">[Female Vocal]</span><span class="pill">[Choir]</span><span class="pill">[End]</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabc reveal" id="t2b">
+    <div class="grid g2">
+      <div class="card">
+        <h3><span class="ico">🎛</span>Конструктор стиля</h3>
+        <label class="f">Жанр-основа</label>
+        <select id="sGenre">
+          <option value="russian pop">russian pop</option>
+          <option value="russian pop ballad">russian pop ballad</option>
+          <option value="russian rock">russian rock</option>
+          <option value="melodic hip-hop">melodic hip-hop</option>
+          <option value="russian chanson">russian chanson</option>
+          <option value="folk pop, acoustic">folk pop, acoustic</option>
+          <option value="edm, festival dance">edm, festival dance</option>
+          <option value="synthwave 80s">synthwave 80s</option>
+          <option value="jazz swing">jazz swing</option>
+          <option value="children song, playful">children song, playful</option>
+          <option value="cinematic orchestral pop">cinematic orchestral pop</option>
+          <option value="lo-fi chill">lo-fi chill</option>
+        </select>
+        <label class="f">Темп: <span id="bpmVal" class="pill">90</span> BPM</label>
+        <input type="range" id="bpm" min="55" max="170" value="90" style="width:100%">
+        <div class="row">
+          <div><label class="f">Вокал</label>
+            <select id="sVocal">
+              <option value="warm female vocal">тёплый женский</option>
+              <option value="powerful female vocal">сильный женский</option>
+              <option value="soft male vocal">мягкий мужской</option>
+              <option value="deep male vocal">низкий мужской</option>
+              <option value="male and female duet">дуэт</option>
+              <option value="children choir">детский хор</option>
+              <option value="no vocals, instrumental">без вокала (инструментал)</option>
+            </select></div>
+          <div><label class="f">Настроение</label>
+            <select id="sMood">
+              <option value="emotional, uplifting">эмоциональное, воодушевляющее</option>
+              <option value="warm, tender, intimate">тёплое, нежное</option>
+              <option value="melancholic, nostalgic">грустное, ностальгическое</option>
+              <option value="energetic, festive">энергичное, праздничное</option>
+              <option value="epic, dramatic">эпичное, драматичное</option>
+              <option value="playful, humorous">игривое, с юмором</option>
+            </select></div>
+        </div>
+        <label class="f">Инструменты</label>
+        <div class="chips" id="instChips">
+          <div class="chip on" data-v="acoustic guitar">acoustic guitar</div>
+          <div class="chip on" data-v="piano">piano</div>
+          <div class="chip" data-v="strings">strings</div>
+          <div class="chip" data-v="soft drums">soft drums</div>
+          <div class="chip" data-v="electric guitar">electric guitar</div>
+          <div class="chip" data-v="synth pads">synth pads</div>
+          <div class="chip" data-v="808 bass">808 bass</div>
+          <div class="chip" data-v="accordion">accordion</div>
+          <div class="chip" data-v="flute">flute</div>
+          <div class="chip" data-v="choir pads">choir pads</div>
+        </div>
+        <label class="f">Качество и микс</label>
+        <div class="chips" id="qualChips">
+          <div class="chip on" data-v="clean production">clean production</div>
+          <div class="chip on" data-v="wide stereo">wide stereo</div>
+          <div class="chip on" data-v="clear vocal, lyrics intelligible">чёткий вокал</div>
+          <div class="chip" data-v="catchy melodic chorus">яркий припев</div>
+          <div class="chip" data-v="radio master, polished">radio master</div>
+          <div class="chip" data-v="live feel">live feel</div>
+        </div>
+        <div class="btnrow"><button class="btn pri" id="genStyle">⚡ Собрать стиль</button><button class="btn" id="copyStyle">Копировать</button></div>
+      </div>
+      <div>
+        <div class="card">
+          <h3><span class="ico">🎼</span>Styles of Music</h3>
+          <div class="out"><pre id="styleOut">Нажми «Собрать стиль»…</pre></div>
+          <p style="color:var(--mut);font-size:13.4px">Suno лучше понимает короткие теги через запятую на английском, а не длинные предложения. Держись в пределах ~200 символов.</p>
+        </div>
+        <div class="card" style="margin-top:16px">
+          <h3><span class="ico">🔢</span>Счётчик попыток</h3>
+          <p style="color:var(--mut);font-size:13.6px;margin-top:0">Отмечай, сколько генераций потратил и что не так — так быстрее найдёшь рабочий стиль.</p>
+          <div class="stat">
+            <div><b id="tryNum">0</b><span>генераций сделано</span></div>
+            <div><b id="tryLeft" class="g">10</b><span>примерно осталось (из 10)</span></div>
+          </div>
+          <div class="btnrow" style="margin-top:6px">
+            <button class="btn sm" id="tryPlus">+ генерация</button>
+            <button class="btn sm" id="tryMinus">−</button>
+            <button class="btn sm" id="tryReset">сброс</button>
+          </div>
+          <label class="f">Заметки по попыткам</label>
+          <textarea id="tryNotes" rows="4" placeholder="№1 — припев хороший, но «звОнит» вместо «звонИт». №2 — жанр слишком роковый…"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabc reveal" id="t2c">
+    <div class="grid g2">
+      <div class="card"><h3><span class="ico">👂</span>Как слушать правильно</h3>
+        <ul class="tick">
+          <li>Первое прослушивание — целиком, без остановки: общее впечатление и жанр.</li>
+          <li>Второе — с текстом перед глазами: отмечаем каждое расхождение ударения.</li>
+          <li>Третье — только припев: он должен запоминаться после одного прослушивания.</li>
+          <li>Слушай в наушниках и на колонке телефона: на телефоне слышно, «съедены» ли слова.</li>
+          <li>Записывай таймкоды проблем: «0:47 — неверное ударение в слове X».</li>
+        </ul>
+        <label class="f">Таймкоды проблем</label>
+        <textarea id="marks" rows="4" placeholder="0:12 — каша в словах&#10;0:47 — «пОнял» вместо «понЯл»"></textarea>
+      </div>
+      <div class="card"><h3><span class="ico">🎚</span>Чек-лист прослушивания</h3>
+        <label class="chk"><input type="checkbox" data-chk="s2a"><span>Жанр соответствует задумке (не внезапно стал роком или рэпом)</span></label>
+        <label class="chk"><input type="checkbox" data-chk="s2b"><span>Темп подходит под настроение и под будущий монтаж</span></label>
+        <label class="chk"><input type="checkbox" data-chk="s2c"><span>Все ударения правильные — ни одного «кривого» слова</span></label>
+        <label class="chk"><input type="checkbox" data-chk="s2d"><span>Все строки спеты, ничего не пропущено и не добавлено</span></label>
+        <label class="chk"><input type="checkbox" data-chk="s2e"><span>Припев запоминается, хук слышен</span></label>
+        <label class="chk"><input type="checkbox" data-chk="s2f"><span>Нет артефактов: шипения, «роботизированного» хрипа, обрывов слов</span></label>
+        <label class="chk"><input type="checkbox" data-chk="s2g"><span>Начало и конец трека чистые (без щелчка и недосказанности)</span></label>
+        <label class="chk"><input type="checkbox" data-chk="s2h"><span>Вокал разборчив: слова понятны без текста перед глазами</span></label>
+        <label class="chk"><input type="checkbox" data-chk="s2i"><span>Трек скачан в MP3/WAV и лежит в папке проекта</span></label>
+        <div class="note good"><b>Правило трёх.</b> Не делай больше 5–6 генераций подряд одного и того же. Если не выходит — меняй не стиль, а текст: чаще всего виновато слово, а не жанр.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabc reveal" id="t2d">
+    <div class="card reveal"><h3><span class="ico">🩹</span>Что делать, если ударение неверное</h3>
+      <div class="grid g2" style="margin-top:6px">
+        <div>
+          <h4>Приёмы в тексте</h4>
+          <ul class="tick">
+            <li>Разбей слово дефисом по слогам: <span class="kbd">мо-ло-ко</span>, <span class="kbd">го-во-рит</span>.</li>
+            <li>Выдели ударный слог заглавными: <span class="kbd">мо-ло-КО</span>.</li>
+            <li>Поставь знак ударения: <span class="kbd">звони́т</span>, <span class="kbd">докуме́нт</span>.</li>
+            <li>Замени слово на синоним с однозначным ударением: «документ» → «бумаги».</li>
+            <li>Переставь слова в строке, чтобы ударный слог попал на сильную долю.</li>
+            <li>Укороти строку на 1–2 слога — вокал перестанет тараторить.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Приёмы в стиле и структуре</h4>
+          <ul class="tick">
+            <li>Снизь темп: <span class="kbd">72 BPM</span> вместо 120 — слова перестанут слипаться.</li>
+            <li>Добавь <span class="kbd">clear vocal, lyrics intelligible</span> и <span class="kbd">slow phrasing</span>.</li>
+            <li>Поставь <span class="kbd">[Pause]</span> или <span class="kbd">[Break]</span> перед трудной строкой.</li>
+            <li>Сделай проблемную строку отдельным <span class="kbd">[Soft]</span>-фрагментом.</li>
+            <li>Используй <b>Cover</b>: тот же текст, другая подача вокала.</li>
+            <li>Используй <b>Extend</b> от удачного места, чтобы не перегенерировать весь трек.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="note warn"><b>Если исправить не удалось.</b> Вернись к шагу 1 и замени слово в тексте. Три перегенерации одного места почти всегда дороже, чем одна правка текста.</div>
+      <div class="btnrow"><button class="btn pri" data-go="step3">Дальше: кадры-изображения →</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STEP 3 ================= -->
+<section class="page" id="page-step3" data-step="step3">
+  <h2 class="sec reveal"><span class="stepbadge">ШАГ 3</span> Изображения по строчкам</h2>
+  <p class="lead reveal">Каждая строка песни — это один кадр. Здесь текст автоматически превращается в раскадровку: для каждой сцены генерируется промпт для нейросети-художника (на русском и английском), задаются длительность и план кадра.</p>
+
+  <div class="card reveal">
+    <h3><span class="ico">🎨</span>Где генерировать картинки</h3>
+    <div class="grid g2" data-tools="img" style="gap:9px"></div>
+  </div>
+
+  <div class="card reveal" style="margin-top:16px">
+    <h3><span class="ico">🖌</span>Единый стиль клипа</h3>
+    <p style="color:var(--mut);font-size:13.8px;margin-top:0">Секрет цельного клипа — одинаковый «суффикс стиля» во всех промптах. Выбери его один раз, и он подставится в каждую сцену.</p>
+    <div class="row">
+      <div><label class="f">Стиль изображения</label>
+        <select id="gStyle">
+          <option value="cinematic 3D animation, soft render|кинематографичная 3D-анимация, мягкий рендер">3D-анимация (как в мультфильме)</option>
+          <option value="anime style, detailed background, studio quality|аниме, детальный фон, студийное качество">Аниме</option>
+          <option value="watercolor illustration, paper texture, soft edges|акварельная иллюстрация, текстура бумаги">Акварель</option>
+          <option value="neon noir, cyberpunk, wet asphalt reflections|неон-нуар, киберпанк, блики на мокром асфальте">Неон-нуар / киберпанк</option>
+          <option value="oil painting, expressive brushstrokes|масляная живопись, выразительные мазки">Живопись маслом</option>
+          <option value="pixel art, 16-bit, retro game aesthetic|пиксель-арт, 16-бит, ретро-игра">Пиксель-арт</option>
+          <option value="photorealistic cinematic still, shallow depth of field|фотореалистичный кинокадр, малая глубина резкости">Фотореализм</option>
+          <option value="flat vector illustration, minimal shapes|плоская векторная иллюстрация, минимализм">Вектор / минимализм</option>
+          <option value="vintage film photo, grain, 1970s colors|винтажное фото, зерно, цвета 1970-х">Винтажное фото</option>
+          <option value="paper cut-out collage, handmade craft|коллаж из бумаги, ручная работа">Бумажный коллаж</option>
+        </select></div>
+      <div><label class="f">Формат кадра</label>
+        <select id="gRatio"><option value="16:9, horizontal">16:9 горизонтально (YouTube)</option><option value="9:16, vertical">9:16 вертикально (Shorts / Клипы)</option><option value="1:1, square">1:1 квадрат</option></select></div>
+      <div><label class="f">Общий свет</label>
+        <select id="gLight">
+          <option value="warm sunset light|тёплый закатный свет">закатный</option>
+          <option value="soft morning light|мягкий утренний свет">утренний</option>
+          <option value="dramatic side lighting|драматичный боковой свет">драматичный</option>
+          <option value="neon night light|неоновый ночной свет">неоновый ночной</option>
+          <option value="overcast diffused light|рассеянный свет в пасмурную погоду">пасмурный</option>
+          <option value="golden hour backlight|контровой свет золотого часа">контровой</option>
+          <option value="cold blue moonlight|холодный лунный свет">лунный</option>
+        </select></div>
+    </div>
+    <div class="row">
+      <div><label class="f">Палитра</label>
+        <select id="gPal">
+          <option value="teal and violet palette|бирюзово-фиолетовая палитра">бирюза + фиолет</option>
+          <option value="warm orange and teal palette|тёплая оранжево-бирюзовая палитра">оранж + бирюза</option>
+          <option value="pastel palette|пастельная палитра">пастель</option>
+          <option value="monochrome with red accent|монохром с красным акцентом">монохром + красный</option>
+          <option value="sunny bright palette|солнечная яркая палитра">солнечная</option>
+          <option value="dark moody palette|тёмная приглушённая палитра">тёмная</option>
+        </select></div>
+      <div><label class="f">Герой (единое описание для всех сцен)</label>
+        <input type="text" id="gHero" placeholder="Например: девушка 25 лет, короткие тёмные волосы, красный шарф"></div>
+      <div><label class="f">Язык промпта</label>
+        <select id="gDual"><option value="both">RU + EN (универсально)</option><option value="ru">только RU</option><option value="en">только EN</option></select></div>
+    </div>
+    <label class="chk" style="margin-top:12px"><input type="checkbox" id="gNeg" checked><span>Добавлять негативный промпт (без текста, водяных знаков, деформаций)</span></label>
+  </div>
+
+  <div class="card reveal" style="margin-top:16px">
+    <h3><span class="ico">📝</span>Текст песни для раскадровки</h3>
+    <textarea id="sbLyrics" rows="9" placeholder="Вставь текст песни — каждая строка станет сценой…"></textarea>
+    <div class="btnrow">
+      <button class="btn pri" id="buildScenes">🎬 Построить раскадровку</button>
+      <button class="btn" id="takeFrom1">↑ Взять текст из Шага 1</button>
+      <button class="btn" id="sbDemo">Пример</button>
+    </div>
+  </div>
+
+  <div class="card reveal" id="scenesWrap" style="margin-top:16px;display:none">
+    <h3><span class="ico">🖼</span>Сцены клипа <span class="pill" id="sceneCount">0</span></h3>
+    <div class="stat">
+      <div><b id="sumDur" class="g">0 с</b><span>суммарно видео</span></div>
+      <div><b id="avgDur">0 с</b><span>средний клип</span></div>
+      <div><b id="animCount">0</b><span>сцен к оживлению</span></div>
+    </div>
+    <div class="legend"><span>■ клик по сегменту — перейти к сцене</span><span>Шире сегмент = длиннее клип</span></div>
+    <div class="tl" id="timeline"></div>
+    <div class="btnrow">
+      <button class="btn sm" id="copyAllPrompts">Копировать все промпты</button>
+      <button class="btn sm" id="dlScenesTxt">⬇ Сцены .txt</button>
+      <button class="btn sm" id="dlScenesJson">⬇ Сцены .json</button>
+      <button class="btn sm" id="fillAll">✎ Заполнить описания подсказками</button>
+      <button class="btn sm ok" data-go="step5">→ В калькулятор тайминга</button>
+    </div>
+    <div id="scenes" style="margin-top:16px"></div>
+  </div>
+
+  <div class="grid g2 reveal" style="margin-top:16px">
+    <div class="card"><h3><span class="ico">💡</span>Как добиться одного стиля</h3>
+      <ul class="tick">
+        <li>Один и тот же суффикс стиля во всех промптах — его задаёт конструктор выше.</li>
+        <li>Герой описан одинаковыми словами в каждой сцене, вплоть до одежды.</li>
+        <li>Одна палитра и один свет во всём клипе — иначе кадры «разъедутся».</li>
+        <li>Если сервис поддерживает референс/seed — используй первый удачный кадр как образец.</li>
+        <li>Генерируй по 2–4 варианта на сцену и выбирай лучший, а не переписывай промпт 20 раз.</li>
+        <li>Проверяй: на картинках не должно быть букв, логотипов и лишних пальцев — это главный брак ИИ.</li>
+      </ul>
+    </div>
+    <div class="card"><h3><span class="ico">🔢</span>Сколько сцен нужно</h3>
+      <p>Песня 2:30 = 150 секунд. При клипах по 5 секунд — 30 сцен, при 8 секундах — около 19.</p>
+      <ul class="tick">
+        <li>Для первого клипа бери 12–16 сцен: часть кадров можно повторить с другим движением.</li>
+        <li>Припев — короче кадры, куплет — длиннее, бридж — один длинный план.</li>
+        <li>Не оживляй всё подряд: 40% кадров оставь статикой с медленным наездом в редакторе.</li>
+      </ul>
+      <div class="note info">Точный расчёт под твой темп — в калькуляторе на Шаге 5. Там же кнопка «Применить длину к сценам».</div>
+    </div>
+  </div>
+
+  <div class="card reveal" style="margin-top:16px">
+    <h3><span class="ico">✅</span>Чек-лист шага 3</h3>
+    <label class="chk"><input type="checkbox" data-chk="s3a"><span>Текст разбит на сцены, у каждой есть строка-опора</span></label>
+    <label class="chk"><input type="checkbox" data-chk="s3b"><span>Выбран единый стиль, свет и палитра для всего клипа</span></label>
+    <label class="chk"><input type="checkbox" data-chk="s3c"><span>Выбран формат кадра (9:16 или 16:9) — один для всех сцен</span></label>
+    <label class="chk"><input type="checkbox" data-chk="s3d"><span>Все изображения сгенерированы и скачаны в папку проекта</span></label>
+    <label class="chk"><input type="checkbox" data-chk="s3e"><span>Проверено: нет букв, водяных знаков и деформаций на кадрах</span></label>
+    <label class="chk"><input type="checkbox" data-chk="s3f"><span>Кадры переименованы по порядку: 01.png, 02.png…</span></label>
+    <div class="btnrow"><button class="btn pri" data-go="step4">Дальше: оживление кадров →</button></div>
+  </div>
+</section>
+
+<!-- ================= STEP 4 ================= -->
+<section class="page" id="page-step4" data-step="step4">
+  <h2 class="sec reveal"><span class="stepbadge">ШАГ 4</span> Оживляем изображения</h2>
+  <p class="lead reveal">Статичный кадр превращается в видео длиной 3–6 секунд. Решает не «больше движения», а «движение по смыслу строки»: на словах про ветер колышутся волосы, на словах про дорогу камера едет вперёд.</p>
+
+  <div class="grid g2 reveal">
+    <div class="card">
+      <h3><span class="ico">🎥</span>Конструктор промпта движения</h3>
+      <label class="f">Движение камеры</label>
+      <select id="mCam">
+        <option value="slow push in camera|медленный наезд камеры">медленный наезд (push in)</option>
+        <option value="slow pull back camera|медленный отъезд камеры">отъезд (pull back)</option>
+        <option value="smooth horizontal panning|плавная горизонтальная панорама">панорама вбок</option>
+        <option value="slow orbit around subject|медленный облёт вокруг объекта">облёт вокруг героя</option>
+        <option value="handheld camera slight shake|лёгкое дрожание ручной камеры">«ручная» камера</option>
+        <option value="camera tilting up|камера поднимается вверх">тилт вверх</option>
+        <option value="static camera, only subject moves|статичная камера, движется только объект">статичная камера</option>
+      </select>
+      <label class="f">Что движется в кадре</label>
+      <select id="mSub">
+        <option value="wind moving hair and clothes|ветер колышет волосы и одежду">ветер: волосы, одежда</option>
+        <option value="flowing water and waves|текущая вода и волны">вода, волны</option>
+        <option value="falling snow and floating particles|падающий снег и парящие частицы">снег, частицы</option>
+        <option value="drifting clouds|плывущие облака">облака</option>
+        <option value="flickering lights and reflections|мерцающие огни и блики">огни, блики</option>
+        <option value="subtle facial expression, blinking|лёгкая мимика, моргание">мимика, моргание</option>
+        <option value="walking forward slowly|медленный шаг вперёд">герой идёт</option>
+        <option value="swaying trees and grass|качающиеся деревья и трава">деревья, трава</option>
+        <option value="dancing crowd, rhythmic movement|танцующая толпа в ритме">танец / толпа</option>
+        <option value="smoke slowly rising|медленно поднимающийся дым">дым</option>
+      </select>
+      <div class="row">
+        <div><label class="f">Длительность</label>
+          <select id="mDur"><option>3 секунды</option><option selected>5 секунд</option><option>8 секунд</option><option>10 секунд</option></select></div>
+        <div><label class="f">Интенсивность</label>
+          <select id="mInt"><option value="very subtle motion|очень лёгкое движение">очень лёгкая</option><option value="natural smooth motion|естественное плавное движение" selected>естественная</option><option value="dynamic energetic motion|динамичное энергичное движение">динамичная</option></select></div>
+      </div>
+      <label class="chk"><input type="checkbox" id="mKeep" checked><span>Добавить защиту: «сохрани лицо и композицию без изменений, без деформаций, без текста»</span></label>
+      <label class="chk"><input type="checkbox" id="mLoop"><span>Сделать бесшовную петлю (loop) — удобно для повторяющихся кадров</span></label>
+      <div class="btnrow"><button class="btn pri" id="genMotion">⚡ Собрать промпт движения</button><button class="btn" id="copyMotion">Копировать</button></div>
+      <div class="out"><pre id="motionOut">Нажми «Собрать промпт движения»…</pre></div>
+    </div>
+
+    <div>
+      <div class="card"><h3><span class="ico">🪄</span>Где оживлять</h3>
+        <div class="grid" style="gap:9px" data-tools="animate"></div>
+        <div class="note"><b>Водяные знаки.</b> На бесплатных тарифах видео может скачиваться с логотипом сервиса. Варианты: скадрировать так, чтобы знак уходил за край, или перекрыть его титром/плашкой в редакторе. Всегда читай условия использования.</div>
+      </div>
+      <div class="card" style="margin-top:16px"><h3><span class="ico">🧐</span>Проверка каждого клипа</h3>
+        <label class="chk"><input type="checkbox" data-chk="s4a"><span>Лицо и руки не «плывут», нет лишних пальцев</span></label>
+        <label class="chk"><input type="checkbox" data-chk="s4b"><span>Движение подходит по смыслу к строке песни</span></label>
+        <label class="chk"><input type="checkbox" data-chk="s4c"><span>Композиция и стиль совпадают с остальными сценами</span></label>
+        <label class="chk"><input type="checkbox" data-chk="s4d"><span>Нет скачков и рывков в начале/конце клипа</span></label>
+        <label class="chk"><input type="checkbox" data-chk="s4e"><span>Учтён водяной знак (или его нет)</span></label>
+        <label class="chk"><input type="checkbox" data-chk="s4f"><span>Все клипы скачаны и названы по номерам сцен</span></label>
+        <div class="note info"><b>Лайфхак.</b> Чередуй: ~60% сцен — живые клипы, ~40% — статичные картинки с медленным наездом в редакторе (эффект Кена Бёрнса). Это экономит кредиты и делает клип ритмичнее.</div>
+        <div class="btnrow"><button class="btn pri" data-go="step5">Дальше: монтаж →</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STEP 5 ================= -->
+<section class="page" id="page-step5" data-step="step5">
+  <h2 class="sec reveal"><span class="stepbadge">ШАГ 5</span> Монтаж: склеиваем видео и накладываем песню</h2>
+  <p class="lead reveal">Финальный шаг. Сначала считаем тайминг, чтобы кадры попадали в музыку, потом собираем всё в бесплатном редакторе и экспортируем.</p>
+
+  <div class="card reveal">
+    <h3><span class="ico">⏱</span>Калькулятор таймлайна</h3>
+    <div class="row">
+      <div><label class="f">Длительность песни (сек)</label><input type="number" id="songDur" value="150" min="10" max="900"></div>
+      <div><label class="f">Темп песни (BPM)</label><input type="number" id="songBpm" value="90" min="40" max="220"></div>
+      <div><label class="f">Сцен в раскадровке</label><input type="number" id="sceneNum" value="16" min="1" max="200"></div>
+      <div><label class="f">Смена кадра каждые</label>
+        <select id="beatDiv"><option value="2">2 доли (быстрый клип)</option><option value="4" selected>1 такт (4 доли)</option><option value="8">2 такта (спокойно)</option><option value="16">4 такта (медитативно)</option></select></div>
+    </div>
+    <div class="stat" id="calcOut"></div>
+    <div class="note info" id="calcAdvice">Заполни данные — получишь рекомендацию.</div>
+    <div class="btnrow"><button class="btn sm" id="calcRun">Пересчитать</button><button class="btn sm ok" id="applyToScenes">Применить длину к сценам из Шага 3</button></div>
+  </div>
+
+  <div class="tabs reveal" style="margin-top:20px">
+    <div class="tab on" data-tab="t5a">1 · Пошаговый монтаж</div>
+    <div class="tab" data-tab="t5b">2 · Синхронизация и ритм</div>
+    <div class="tab" data-tab="t5c">3 · Экспорт и публикация</div>
+  </div>
+
+  <div class="tabc on reveal" id="t5a">
+    <div class="grid g2">
+      <div class="card"><h3><span class="ico">🧰</span>Бесплатные редакторы</h3>
+        <div class="grid" style="gap:9px" data-tools="edit"></div>
+      </div>
+      <div class="card"><h3><span class="ico">🪜</span>Порядок сборки</h3>
+        <ul class="tick">
+          <li><b>1. Проект.</b> Сразу задай разрешение и FPS: 1080×1920 (вертикаль) или 1920×1080, 30/60 fps.</li>
+          <li><b>2. Музыка.</b> Перетащи трек на аудиодорожку — это «скелет» клипа.</li>
+          <li><b>3. Маркеры.</b> Прослушай трек и отметь смену частей: интро, куплет, припев, бридж.</li>
+          <li><b>4. Раскладка.</b> Разложи клипы по порядку сцен, выравнивая срезы по маркерам.</li>
+          <li><b>5. Подрезка.</b> Обрезай лишнее в начале и конце каждого клипа — движение должно быть в середине.</li>
+          <li><b>6. Переходы.</b> По умолчанию — простая склейка (cut). Crossfade 0,2–0,4 с — только на смене частей песни.</li>
+          <li><b>7. Статика.</b> Для не-оживлённых картинок включи медленный наезд/панораму, чтобы кадр «дышал».</li>
+          <li><b>8. Цвет.</b> Примени одну корректирующую настройку или LUT ко всем клипам.</li>
+          <li><b>9. Титры.</b> Название в начале, строки припева по желанию, титр «создано с помощью ИИ» в конце.</li>
+          <li><b>10. Звук.</b> Fade in 0,5 с и fade out 2–3 с. Пик не выше −1 dB.</li>
+          <li><b>11. Проверка.</b> Просмотри целиком дважды: со звуком и без — видно проблемы ритма.</li>
+          <li><b>12. Экспорт.</b> H.264, MP4, 1080p, 30/60 fps, 8–12 Мбит/с, AAC 256–320 kbps.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabc reveal" id="t5b">
+    <div class="grid g2">
+      <div class="card"><h3><span class="ico">🥁</span>Попадание в музыку</h3>
+        <ul class="tick">
+          <li>Длина такта = 4 × 60 / BPM. При 90 BPM такт = 2,67 с — удобная базовая длина кадра.</li>
+          <li><b>Куплет:</b> смена кадра раз в 1–2 такта, движение спокойное.</li>
+          <li><b>Припев:</b> смена каждые полтакта-такт, больше динамики.</li>
+          <li><b>Бридж:</b> один длинный кадр 6–10 с или замедление — контраст к припеву.</li>
+          <li><b>Дроп / кульминация:</b> самая быстрая нарезка, 4–6 коротких кадров подряд.</li>
+          <li>Первая доля такта — сильная: ставь на неё срез, тогда клип «качает».</li>
+          <li>Не меняй кадр ровно на середине слова — режь между фразами.</li>
+        </ul>
+      </div>
+      <div class="card"><h3><span class="ico">🎞</span>Типичные ошибки монтажа</h3>
+        <ul class="tick">
+          <li>Все переходы «красивые» (звёзды, шторки, глитчи) — выглядит дёшево. 90% — обычный cut.</li>
+          <li>Видео короче песни: в конце чёрный экран. Всегда проверяй суммарную длительность.</li>
+          <li>Видео длиннее песни: трек обрывается, а кадры идут. Делай fade out и финальный титр.</li>
+          <li>Разные форматы кадров (часть 9:16, часть 16:9) — чёрные полосы по бокам.</li>
+          <li>Кадр «дёргается»: движение начинается не с первого кадра — обрезай начало.</li>
+          <li>Слишком много текста на экране — зритель читает, а не смотрит.</li>
+          <li>Нет финальной точки: последний кадр должен совпадать с последним аккордом.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabc reveal" id="t5c">
+    <div class="grid g2">
+      <div class="card"><h3><span class="ico">📤</span>Настройки экспорта</h3>
+        <table>
+          <thead><tr><th>Параметр</th><th>Вертикаль (Shorts/Клипы)</th><th>Горизонталь (YouTube)</th></tr></thead>
+          <tbody>
+            <tr><td>Разрешение</td><td>1080×1920</td><td>1920×1080</td></tr>
+            <tr><td>FPS</td><td>30 (или 60 для динамики)</td><td>30</td></tr>
+            <tr><td>Кодек</td><td colspan="2">H.264, контейнер MP4</td></tr>
+            <tr><td>Битрейт видео</td><td>10–14 Мбит/с</td><td>8–12 Мбит/с</td></tr>
+            <tr><td>Аудио</td><td colspan="2">AAC, 256–320 kbps, 48 kHz</td></tr>
+            <tr><td>Длина</td><td>до 60 с (иначе не попадёт в Shorts)</td><td>любая</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card"><h3><span class="ico">🚀</span>Публикация</h3>
+        <ul class="tick">
+          <li><b>YouTube Shorts / VK Клипы / Rutube</b> — вертикаль и цепляющий первый кадр.</li>
+          <li>Обложка: самый яркий кадр клипа + крупный текст названия.</li>
+          <li>В описании: автор стихов (если чужие), какие нейросети использованы.</li>
+          <li>Поставь отметку «создано с помощью ИИ», если площадка это предлагает.</li>
+          <li>Первые 3 секунды решают всё — начни с самого красивого кадра, а не с логотипа.</li>
+          <li>Сохрани проект редактора: через месяц захочется что-то поправить.</li>
+        </ul>
+        <div class="note good"><b>Готово!</b> У тебя клип, который стоил 0 ₽ и один вечер работы. Дальше — усложняй: больше сцен, параллельный монтаж, титры с текстом песни, версия для stories.</div>
+      </div>
+    </div>
+    <div class="card reveal" style="margin-top:16px">
+      <h3><span class="ico">✅</span>Чек-лист шага 5</h3>
+      <label class="chk"><input type="checkbox" data-chk="s5a"><span>Проект создан с правильным разрешением и FPS</span></label>
+      <label class="chk"><input type="checkbox" data-chk="s5b"><span>Трек на таймлайне, расставлены маркеры частей песни</span></label>
+      <label class="chk"><input type="checkbox" data-chk="s5c"><span>Все клипы разложены по порядку сцен, без дыр</span></label>
+      <label class="chk"><input type="checkbox" data-chk="s5d"><span>Смена кадров совпадает с сильными долями</span></label>
+      <label class="chk"><input type="checkbox" data-chk="s5e"><span>Единый цвет/LUT применён ко всем клипам</span></label>
+      <label class="chk"><input type="checkbox" data-chk="s5f"><span>Добавлены титры и отметка об использовании ИИ</span></label>
+      <label class="chk"><input type="checkbox" data-chk="s5g"><span>Звук: fade in/out, без перегруза</span></label>
+      <label class="chk"><input type="checkbox" data-chk="s5h"><span>Длительность видео = длительность песни</span></label>
+      <label class="chk"><input type="checkbox" data-chk="s5i"><span>Экспортировано в MP4 1080p и проверено на телефоне</span></label>
+      <div class="btnrow"><button class="btn pri" data-go="checklist">Открыть общий чек-лист →</button><button class="btn" data-go="quiz">Пройти тест →</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CHECKLIST ================= -->
+<section class="page" id="page-checklist">
+  <h2 class="sec reveal">Чек-лист всего проекта</h2>
+  <p class="lead reveal">Полный маршрут клипа на одном экране. Прогресс сохраняется в браузере — можно закрывать страницу и возвращаться.</p>
+  <div class="card reveal">
+    <h3><span class="ico">📦</span>Финальная сборка и публикация</h3>
+    <label class="chk"><input type="checkbox" data-chk="fx1"><span>Создана папка проекта: /текст /аудио /картинки /видео /экспорт</span></label>
+    <label class="chk"><input type="checkbox" data-chk="fx2"><span>Текст песни сохранён в двух версиях: обычная и с ударениями</span></label>
+    <label class="chk"><input type="checkbox" data-chk="fx3"><span>Финальный трек скачан и прослушан 3 раза (целиком, с текстом, припев)</span></label>
+    <label class="chk"><input type="checkbox" data-chk="fx4"><span>Все кадры сгенерированы в одном стиле и формате</span></label>
+    <label class="chk"><input type="checkbox" data-chk="fx5"><span>Нужные кадры оживлены, остальные получат наезд в редакторе</span></label>
+    <label class="chk"><input type="checkbox" data-chk="fx6"><span>Суммарная длительность видео не меньше длительности песни</span></label>
+    <label class="chk"><input type="checkbox" data-chk="fx7"><span>Клип экспортирован и проверен на телефоне</span></label>
+    <label class="chk"><input type="checkbox" data-chk="fx8"><span>Описание и обложка готовы, указано об использовании ИИ</span></label>
+    <label class="chk"><input type="checkbox" data-chk="fx9"><span>Клип опубликован 🎉</span></label>
+    <div class="btnrow">
+      <button class="btn pri" id="exportAll2">⬇ Скачать план проекта (.txt)</button>
+      <button class="btn" id="copyPlan">Копировать план</button>
+    </div>
+  </div>
+  <div class="grid g3 reveal" style="margin-top:16px">
+    <div class="card"><h3><span class="ico">1️⃣</span>Текст</h3><p style="color:var(--mut);font-size:13.6px;margin:0">Промпт → 2–3 варианта → выбрать → разметить ударения → выровнять ритм.</p><div class="btnrow"><button class="btn sm" data-go="step1">Перейти</button></div></div>
+    <div class="card"><h3><span class="ico">2️⃣</span>Песня</h3><p style="color:var(--mut);font-size:13.6px;margin:0">Custom Mode → Lyrics → Style → Create → прослушать → починить ударения → скачать.</p><div class="btnrow"><button class="btn sm" data-go="step2">Перейти</button></div></div>
+    <div class="card"><h3><span class="ico">3️⃣</span>Кадры</h3><p style="color:var(--mut);font-size:13.6px;margin:0">Раскадровка по строкам → единый стиль → генерация → отбор → именование файлов.</p><div class="btnrow"><button class="btn sm" data-go="step3">Перейти</button></div></div>
+    <div class="card"><h3><span class="ico">4️⃣</span>Движение</h3><p style="color:var(--mut);font-size:13.6px;margin:0">Промпт движения → оживление в Алисе → проверка лица и рук → скачивание.</p><div class="btnrow"><button class="btn sm" data-go="step4">Перейти</button></div></div>
+    <div class="card"><h3><span class="ico">5️⃣</span>Монтаж</h3><p style="color:var(--mut);font-size:13.6px;margin:0">Расчёт тайминга → маркеры по битам → склейка → цвет → титры → экспорт.</p><div class="btnrow"><button class="btn sm" data-go="step5">Перейти</button></div></div>
+    <div class="card"><h3><span class="ico">🏁</span>Тест</h3><p style="color:var(--mut);font-size:13.6px;margin:0">8 вопросов, чтобы проверить, что всё запомнилось. Проходной балл — 6 из 8.</p><div class="btnrow"><button class="btn sm" data-go="quiz">Пройти</button></div></div>
+  </div>
+</section>
+
+<!-- ================= QUIZ ================= -->
+<section class="page" id="page-quiz">
+  <h2 class="sec reveal">Тест: проверь себя</h2>
+  <p class="lead reveal">Выбери один вариант в каждом вопросе и нажми «Проверить». Ошибки разбираются с объяснением.</p>
+  <div id="quizBox" class="reveal"></div>
+  <div class="btnrow reveal">
+    <button class="btn pri" id="quizCheck">Проверить ответы</button>
+    <button class="btn" id="quizReset">Сбросить тест</button>
+  </div>
+  <div class="card reveal" id="quizRes" style="display:none;margin-top:16px"></div>
+</section>
+
+<!-- ================= TOOLS ================= -->
+<section class="page" id="page-tools">
+  <h2 class="sec reveal">Бесплатные сервисы для всего конвейера</h2>
+  <p class="lead reveal">Минимальный набор: 1 текстовая нейросеть + Suno + 1 генератор картинок + 1 оживлятор + 1 редактор. Всё остальное — по желанию.</p>
+  <div class="note warn reveal"><b>Если ссылка не открывается.</b> Некоторые браузеры и окна предпросмотра блокируют всплывающие окна. Кликни по карточке сервиса: если новое окно не открылось, появится панель с адресом — скопируй его и вставь в адресную строку. Полный список адресов — в самом низу страницы.</div>
+
+  <div class="card reveal"><h3><span class="ico">✍️</span>Тексты песен</h3><div class="grid g2" data-tools="text" style="gap:9px"></div></div>
+  <div class="card reveal" style="margin-top:16px"><h3><span class="ico">🎵</span>Музыка и вокал</h3><div class="grid g2" data-tools="music" style="gap:9px"></div></div>
+  <div class="card reveal" style="margin-top:16px"><h3><span class="ico">🖼</span>Изображения</h3><div class="grid g2" data-tools="img" style="gap:9px"></div></div>
+  <div class="card reveal" style="margin-top:16px"><h3><span class="ico">🎞</span>Оживление кадров (image → video)</h3><div class="grid g2" data-tools="animate" style="gap:9px"></div></div>
+  <div class="card reveal" style="margin-top:16px"><h3><span class="ico">🧰</span>Видеоредакторы</h3><div class="grid g2" data-tools="edit" style="gap:9px"></div></div>
+
+  <div class="card reveal" style="margin-top:16px">
+    <h3><span class="ico">🔗</span>Все адреса одним списком</h3>
+    <p style="color:var(--mut);font-size:13.6px;margin-top:0">Можно выделить и скопировать вручную, если клики заблокированы.</p>
+    <div class="vw" id="linkList"></div>
+    <div class="btnrow"><button class="btn sm pri" id="copyLinks">Копировать все ссылки</button><button class="btn sm" id="dlLinks">⬇ Скачать список .txt</button></div>
+    <div class="note info"><b>Проверяй условия.</b> Бесплатные лимиты, водяные знаки и права на использование меняются. Перед публикацией убедись, что лицензия сервиса разрешает твой тип использования — особенно если клип делается на заказ.</div>
+  </div>
+</section>
+
+<div class="foot">КлипМастер · учебный тренажёр по созданию бесплатных музыкальных клипов на нейросетях · прогресс хранится только в твоём браузере</div>
+</main>
+</div>
+
+<div id="toast"></div>
+
+<div class="modal" id="linkModal">
+  <div class="modal-box">
+    <h3>🔗 Новая вкладка не открылась</h3>
+    <p>Браузер или окно предпросмотра заблокировало всплывающее окно. Скопируй адрес и открой его вручную — или разреши всплывающие окна для этой страницы и нажми «Повторить».</p>
+    <input type="text" id="modalUrl" readonly>
+    <div class="btnrow">
+      <button class="btn pri" id="modalCopy">Копировать адрес</button>
+      <button class="btn" id="modalRetry">↗ Повторить открытие</button>
+      <button class="btn" id="modalClose">Закрыть</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============ UTILS ============ */
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+const STORE_KEY = 'clipmaster_v2';
+let store = {};
+try { store = JSON.parse(localStorage.getItem(STORE_KEY) || '{}') || {}; } catch(e){ store = {}; }
+function save(){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(store)); }catch(e){} }
+function toast(msg){
+  const w = $('#toast'); const t = document.createElement('div');
+  t.className = 'tst'; t.textContent = msg; w.appendChild(t);
+  requestAnimationFrame(()=>t.classList.add('show'));
+  setTimeout(()=>{ t.classList.remove('show'); setTimeout(()=>t.remove(), 350); }, 2200);
+}
+function clip(text){
+  if(!text || !text.trim()){ toast('Сначала сгенерируй текст'); return; }
+  const fallback = ()=>{
+    const ta = document.createElement('textarea'); ta.value = text;
+    ta.style.position='fixed'; ta.style.left='-9999px';
+    document.body.appendChild(ta); ta.focus(); ta.select();
+    let ok = false; try{ ok = document.execCommand('copy'); }catch(e){}
+    ta.remove(); toast(ok ? 'Скопировано' : 'Не удалось скопировать — выдели текст вручную');
+  };
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(text).then(()=>toast('Скопировано в буфер обмена')).catch(fallback);
+  } else fallback();
+}
+function download(name, text, type='text/plain;charset=utf-8'){
+  const blob = new Blob([text], {type}); const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = name;
+  document.body.appendChild(a); a.click();
+  setTimeout(()=>{ a.remove(); URL.revokeObjectURL(url); }, 500);
+  toast('Файл скачан: ' + name);
+}
+const VOW = 'аеёиоуыэюяАЕЁИОУЫЭЮЯ';
+function sylCount(w){ let n=0; for(const ch of w) if(VOW.includes(ch)) n++; return n; }
+function lineSyl(l){ return l.split(/[^А-Яа-яЁёA-Za-z-]+/).filter(Boolean).reduce((a,w)=>a+sylCount(w),0); }
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+/* ============ ССЫЛКИ: данные и надёжное открытие ============ */
+const TOOLS = [
+  {l:'Q', n:'Qwen Chat', u:'https://chat.qwen.ai', d:'Тексты песен и картинки: держит размер, структуру и букву «ё». Проси 2–3 варианта сразу.', f:'бесплатно', c:['text','img']},
+  {l:'C', n:'ChatGPT', u:'https://chatgpt.com', d:'Образы, ирония, игра слов. Есть бесплатный тариф с лимитом сообщений.', f:'free-тариф', c:['text']},
+  {l:'G', n:'GigaChat (Сбер)', u:'https://giga.chat', d:'Русские имена, реалии и речевые обороты; умеет и текст, и картинки.', f:'бесплатно', c:['text','img']},
+  {l:'A', n:'Алиса AI (Яндекс)', u:'https://alice.yandex.ru', d:'Чат с Алисой: текст, изображения и оживление в одной экосистеме Яндекса.', f:'бесплатно', c:['text','img','animate']},
+  {l:'S', n:'Suno', u:'https://suno.com', d:'Песня из текста: вокал + аранжировка. Custom Mode, Extend, Cover, ~10 треков в день бесплатно.', f:'кредиты в день', c:['music']},
+  {l:'U', n:'Udio', u:'https://www.udio.com', d:'Альтернатива Suno — полезно сравнить две версии одной песни.', f:'free-лимит', c:['music']},
+  {l:'Ш', n:'Шедеврум (Яндекс)', u:'https://shedevrum.ai', d:'Картинки и видео по описанию, есть мобильное приложение. Основной инструмент для оживления кадров.', f:'бесплатно', c:['img','animate']},
+  {l:'J', n:'Jay Flow', u:'https://jayflow.ai', d:'Единый холст: серия кадров в одном стиле, несколько моделей в одном окне.', f:'free-кредиты', c:['img']},
+  {l:'K', n:'Kandinsky · Fusion Brain', u:'https://fusionbrain.ai', d:'Нейросеть Сбера: изображения, стили-пресеты, короткие видео и 3D.', f:'бесплатно', c:['img','animate']},
+  {l:'K', n:'Kling AI', u:'https://kling.ai', d:'Image-to-Video: плавное движение, до 1080p, есть бесплатные кредиты.', f:'free-кредиты', c:['animate']},
+  {l:'L', n:'Luma Dream Machine', u:'https://lumalabs.ai', d:'Движение камеры: наезд, отъезд, облёт. Ежедневные бесплатные генерации.', f:'free-лимит', c:['animate']},
+  {l:'H', n:'Hailuo AI (MiniMax)', u:'https://hailuoai.video', d:'Хорошая мимика и движение людей из статичного кадра.', f:'free-лимит', c:['animate']},
+  {l:'P', n:'Pika', u:'https://pika.art', d:'Быстрое оживление картинок, простые эффекты движения.', f:'free-кредиты', c:['animate']},
+  {l:'R', n:'Runway', u:'https://runwayml.com', d:'Профессиональный image-to-video, стартовые кредиты бесплатно.', f:'пробные кредиты', c:['animate']},
+  {l:'C', n:'CapCut', u:'https://www.capcut.com', d:'Монтаж для новичка: ПК и телефон, автосубтитры, эффекты, экспорт 1080p.', f:'бесплатно', c:['edit']},
+  {l:'D', n:'DaVinci Resolve', u:'https://www.blackmagicdesign.com/products/davinciresolve', d:'Профессиональный цвет и звук, бесплатная версия почти без ограничений.', f:'бесплатно', c:['edit']},
+  {l:'S', n:'Shotcut', u:'https://shotcut.org', d:'Лёгкий редактор для слабого ПК, без водяных знаков.', f:'open source', c:['edit']},
+  {l:'K', n:'Kdenlive', u:'https://kdenlive.org', d:'Классический таймлайн, много дорожек, автосохранение проектов.', f:'open source', c:['edit']},
+  {l:'V', n:'VN Video Editor', u:'https://vlognow.me', d:'Монтаж в телефоне: точная подрезка по долям, 4K, без водяного знака.', f:'бесплатно', c:['edit']},
+  {l:'I', n:'InShot', u:'https://inshot.com', d:'Быстрый мобильный монтаж вертикальных роликов.', f:'бесплатно', c:['edit']},
+  {l:'C', n:'Clipchamp', u:'https://clipchamp.com', d:'Онлайн-редактор в браузере, встроен в Windows 11.', f:'бесплатно', c:['edit']}
+];
+const domainOf = u => u.replace(/^https?:\/\//,'').replace(/\/+$/,'');
+
+function showLinkModal(url){
+  $('#modalUrl').value = url;
+  $('#linkModal').classList.add('on');
+  setTimeout(()=>{ const i = $('#modalUrl'); i.focus(); i.select(); }, 60);
+}
+function openLink(url){
+  let w = null;
+  try { w = window.open(url, '_blank', 'noopener,noreferrer'); } catch(e){ w = null; }
+  if(w){ toast('Открываю ' + domainOf(url)); return; }
+  /* запасной вариант — программный клик по ссылке */
+  let opened = false;
+  try{
+    const a = document.createElement('a');
+    a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+    a.style.display = 'none'; document.body.appendChild(a);
+    a.click(); setTimeout(()=>a.remove(), 200); opened = true;
+  }catch(e){ opened = false; }
+  if(!opened){ /* если и это запрещено */ }
+  showLinkModal(url);
+}
+function renderTools(){
+  $$('[data-tools]').forEach(box=>{
+    const cat = box.dataset.tools;
+    box.innerHTML = TOOLS.filter(t=>t.c.includes(cat)).map(t=>`
+      <div class="tool" data-link="${t.u}" role="link" tabindex="0" title="Открыть ${domainOf(t.u)}">
+        <span class="ico">${t.l}</span>
+        <div style="min-width:0">
+          <a href="${t.u}" target="_blank" rel="noopener noreferrer">${t.n}</a>
+          <small>${t.d}</small>
+          <span class="dom">${domainOf(t.u)} ↗</span>
+        </div>
+        <span class="free">${t.f}</span>
+      </div>`).join('');
+  });
+  const list = TOOLS.map(t=>`${t.n} — ${t.u}`).join('\n');
+  const ll = $('#linkList'); if(ll) ll.textContent = list;
+}
+renderTools();
+$('#copyLinks') && ($('#copyLinks').onclick = ()=>clip(TOOLS.map(t=>`${t.n} — ${t.u}`).join('\n')));
+$('#dlLinks') && ($('#dlLinks').onclick = ()=>download('ai-services-links.txt',
+  'БЕСПЛАТНЫЕ СЕРВИСЫ ДЛЯ КЛИПА\n\n' + TOOLS.map(t=>`${t.n} — ${t.u}\n  ${t.d}`).join('\n\n')));
+$('#modalCopy').onclick = ()=>clip($('#modalUrl').value);
+$('#modalRetry').onclick = ()=>{ const u = $('#modalUrl').value; $('#linkModal').classList.remove('on'); openLink(u); };
+$('#modalClose').onclick = ()=>$('#linkModal').classList.remove('on');
+$('#linkModal').addEventListener('click', e=>{ if(e.target.id === 'linkModal') $('#linkModal').classList.remove('on'); });
+document.addEventListener('keydown', e=>{ if(e.key === 'Escape') $('#linkModal').classList.remove('on'); });
+
+/* ============ NAVIGATION ============ */
+function go(id){
+  $$('.page').forEach(p=>p.classList.remove('on'));
+  const pg = $('#page-'+id); if(pg) pg.classList.add('on');
+  $$('.nav-i').forEach(n=>n.classList.toggle('on', n.dataset.go===id));
+  window.scrollTo({top:0, behavior:'smooth'});
+  store.page = id; save();
+  setTimeout(revealInit, 60);
+}
+document.addEventListener('click', e=>{
+  /* ссылки на сервисы — обрабатываем сами, чтобы обойти блокировку всплывающих окон */
+  const linkEl = e.target.closest('[data-link]');
+  if(linkEl){
+    e.preventDefault(); e.stopPropagation();
+    openLink(linkEl.dataset.link);
+    return;
+  }
+  const kb = e.target.closest('.tool');
+  if(kb && kb.dataset.link){ e.preventDefault(); openLink(kb.dataset.link); return; }
+
+  const navEl = e.target.closest('[data-go]');
+  if(navEl){ go(navEl.dataset.go); return; }
+
+  const chip = e.target.closest('.chip');
+  if(chip && chip.dataset.v !== undefined){ chip.classList.toggle('on'); return; }
+
+  const tab = e.target.closest('.tab');
+  if(tab && tab.dataset.tab){
+    const parent = tab.closest('.page') || document;
+    const tabs = tab.parentElement;
+    $$('.tab', tabs).forEach(t=>t.classList.remove('on'));
+    tab.classList.add('on');
+    $$('.tabc', parent).forEach(c=>{ if(c.id && c.id.startsWith('t'+tab.dataset.tab.slice(1,2))) c.classList.remove('on'); });
+    const target = $('#'+tab.dataset.tab); if(target) target.classList.add('on');
+    setTimeout(revealInit, 40);
+  }
+});
+document.addEventListener('keydown', e=>{
+  const kb = e.target.closest && e.target.closest('[data-link]');
+  if(kb && (e.key === 'Enter' || e.key === ' ')){ e.preventDefault(); openLink(kb.dataset.link); }
+});
+
+/* ============ REVEAL ============ */
+function revealInit(){
+  const io = new IntersectionObserver(es=>{ es.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } }); }, {threshold:.06});
+  $$('.reveal').forEach(el=>{ if(!el.classList.contains('in')) io.observe(el); });
+}
+revealInit();
+
+/* ============ CHECKLISTS & PROGRESS ============ */
+function syncChecks(){
+  $$('input[data-chk]').forEach(cb=>{
+    const k = cb.dataset.chk;
+    cb.checked = !!(store.chk && store.chk[k]);
+    const box = cb.closest('.chk'); if(box) box.classList.toggle('done', cb.checked);
+    cb.onchange = ()=>{
+      store.chk = store.chk || {}; store.chk[k] = cb.checked; save();
+      const b = cb.closest('.chk'); if(b) b.classList.toggle('done', cb.checked);
+      progress(); toast(cb.checked ? 'Отмечено ✓' : 'Снята отметка');
+    };
+  });
+  progress();
+}
+function progress(){
+  const all = $$('input[data-chk]'); const done = all.filter(c=>c.checked).length;
+  const pct = all.length ? Math.round(done/all.length*100) : 0;
+  $('#topbar').style.width = pct+'%'; $('#pctTxt').textContent = pct+'%';
+  $$('.nav-i[data-step]').forEach(n=>{
+    const sec = $('#page-'+n.dataset.step); if(!sec) return;
+    const list = $$('input[data-chk]', sec);
+    n.classList.toggle('done', list.length>0 && list.every(c=>c.checked));
+  });
+  return pct;
+}
+syncChecks();
+$('#resetBtn').onclick = ()=>{ if(confirm('Сбросить весь прогресс и введённые данные?')){ localStorage.removeItem(STORE_KEY); location.reload(); } };
+
+/* ============ STEP 1: TEXT PROMPT ============ */
+function collectChips(id){ return $$('#'+id+' .chip.on').map(c=>c.dataset.v); }
+function buildTextPrompt(){
+  const ev = $('#ev').value, heroes = $('#heroes').value.trim(), mood = $('#mood').value;
+  const genre = $('#genre').value, lang = $('#lang').value, ll = $('#linelen').value;
+  const verses = parseInt($('#verses').value||'2',10);
+  const struct = collectChips('structChips');
+  const reqs = collectChips('reqChips');
+  const structLine = struct.length ? struct.join(', ') : 'куплеты и припев';
+  const vl = ll.split('-');
+  let p = `Ты — профессиональный поэт-песенник. Напиши готовый текст песни на языке: ${lang}.\n\n`;
+  p += `Повод / событие: ${ev}\n`;
+  if(heroes) p += `Герои, имена и важные детали: ${heroes}\n`;
+  p += `Настроение: ${mood}\nЖанр: ${genre}\n`;
+  p += `Структура: ${structLine}; ${verses} куплет(а/ов) по 4 строки.\n`;
+  p += `Ритм: ${vl[0]}–${vl[1]} слогов в строке, одинаковый размер во всех куплетах.\nРифма: перекрёстная (АБАБ), точные рифмы в припеве.\n\nТребования:\n`;
+  reqs.forEach((r,i)=> p += `${i+1}. ${r}.\n`);
+  p += `${reqs.length+1}. Метки частей песни пиши в квадратных скобках на английском: [Intro], [Verse 1], [Chorus], [Bridge], [Outro].\n`;
+  p += `${reqs.length+2}. Между частями оставляй пустую строку.\n`;
+  p += `${reqs.length+3}. Никаких пояснений и комментариев — только текст песни.\n\n`;
+  p += `Дай 2 разных варианта текста. После каждого варианта предложи 3 названия песни.`;
+  $('#textOut').textContent = p;
+  store.textPrompt = p; save(); toast('Промпт собран');
+  return p;
+}
+$('#genText').onclick = buildTextPrompt;
+$('#copyText').onclick = ()=>clip($('#textOut').textContent);
+$('#dlText').onclick = ()=>download('prompt-lyrics.txt', $('#textOut').textContent);
+$('#copyPoem').onclick = ()=>clip($('#poemPrompt').textContent);
+$('#toStep1Tool').onclick = ()=>{ $('.tab[data-tab="t1b"]').click(); toast('Вставь полученный текст в поле'); };
+
+/* ============ STEP 1: ACCENT / RHYTHM TOOL ============ */
+let tokens = [];
+let accents = {};
+const DEMO = `[Intro]
+Свет в мониторе, ночь на проводах
+
+[Verse 1]
+Я соберу из пикселей рассвет
+И оживлю нарисованный сад
+Пусть нейросеть напишет мне куплет
+Про то, как звёзды падают на зад
+
+[Chorus]
+Это наш клип — он сделан на коленке
+Это наш хит — из строчек и огней
+Мы соберём мечту из перемотки
+И станет тишина ещё светлей
+
+[Verse 2]
+Пять секунд на кадр, и снова свет
+Монтажная линейка как струна
+Так появляется простой сюжет
+Где вместо камеры — одна волна
+
+[Outro]
+Свет в мониторе, утро на проводах`;
+
+function tokenize(text){
+  tokens = []; accents = {}; let id = 0;
+  text.split('\n').forEach((ln, i)=>{
+    if(i>0) tokens.push({t:'nl'});
+    ln.split(/([А-Яа-яЁёA-Za-z][А-Яа-яЁёA-Za-z'-]*)/g).forEach(pt=>{
+      if(!pt) return;
+      if(/^[А-Яа-яЁёA-Za-z][А-Яа-яЁёA-Za-z'-]*$/.test(pt)) tokens.push({t:'word', s:pt, id:id++});
+      else tokens.push({t:'other', s:pt});
+    });
+  });
+}
+function renderAccentView(){
+  const mode = $('#accentMode').checked;
+  const box = $('#accentView'); box.innerHTML = '';
+  let yo = 0;
+  tokens.forEach(tk=>{
+    if(tk.t==='nl'){ box.appendChild(document.createElement('br')); return; }
+    if(tk.t==='other'){ box.appendChild(document.createTextNode(tk.s)); return; }
+    const w = document.createElement('span');
+    if(/[ёЁ]/.test(tk.s)) yo++;
+    let vi = -1;
+    tk.s.split('').forEach(ch=>{
+      if(VOW.includes(ch)){
+        vi++;
+        if(mode){
+          const sp = document.createElement('span');
+          sp.className = 'v' + (accents[tk.id]===vi ? ' acc' : '');
+          sp.textContent = ch + (accents[tk.id]===vi ? '\u0301' : '');
+          sp.onclick = ()=>{ accents[tk.id] = (accents[tk.id]===vi ? -1 : vi); store.accents = accents; save(); renderAccentView(); };
+          w.appendChild(sp);
+        } else w.appendChild(document.createTextNode(ch));
+      } else w.appendChild(document.createTextNode(ch));
+    });
+    box.appendChild(w);
+  });
+  $('#stYo').textContent = yo;
+  if(!tokens.length) box.textContent = 'Здесь появится размеченный текст.';
+}
+function renderRhythm(){
+  const lines = $('#lyrIn').value.split('\n');
+  let out = [], total = 0, cnt = 0;
+  lines.forEach((ln,i)=>{
+    if(!ln.trim()) return;
+    if(/^\s*\[.*\]\s*$/.test(ln)){ out.push(`— ${ln.trim()} —`); return; }
+    const s = lineSyl(ln); total += s; cnt++;
+    out.push(`${String(i+1).padStart(2,'0')} · ${String(s).padStart(2,' ')} сл · ${'█'.repeat(Math.min(s,22))}`);
+  });
+  $('#rhythmView').textContent = out.join('\n') || '—';
+  $('#stLines').textContent = cnt; $('#stSyl').textContent = total;
+  $('#stAvg').textContent = cnt ? (total/cnt).toFixed(1) : 0;
+}
+function markedText(){
+  let out = '', cur = '';
+  const flush = ()=>{ if(cur){ out += (out ? '\n' : '') + cur; cur = ''; } };
+  tokens.forEach(tk=>{
+    if(tk.t==='nl'){ flush(); return; }
+    if(tk.t==='other'){ cur += tk.s; return; }
+    let vi = -1, s = '';
+    for(const ch of tk.s){
+      if(VOW.includes(ch)){ vi++; s += ch + (accents[tk.id]===vi ? '\u0301' : ''); }
+      else s += ch;
+    }
+    cur += s;
+  });
+  flush(); return out;
+}
+$('#parseLyrics').onclick = ()=>{
+  const t = $('#lyrIn').value;
+  if(!t.trim()){ toast('Вставь текст песни'); return; }
+  tokenize(t); renderAccentView(); renderRhythm();
+  store.lyrics = t; store.accents = accents; save();
+  toast('Разобрано. ' + ($('#accentMode').checked ? 'Кликай по гласным' : 'Включи режим ударений'));
+};
+$('#loadDemo').onclick = ()=>{ $('#lyrIn').value = DEMO; $('#parseLyrics').click(); };
+$('#accentMode').onchange = ()=>renderAccentView();
+$('#clearAcc').onclick = ()=>{ accents = {}; store.accents = {}; save(); renderAccentView(); toast('Ударения очищены'); };
+$('#copyAcc').onclick = ()=>clip(markedText());
+$('#accToStep2').onclick = ()=>{
+  const t = markedText() || $('#lyrIn').value;
+  $('#sbLyrics').value = t; store.sbLyrics = t; save();
+  go('step3'); toast('Текст перенесён в раскадровку');
+};
+
+/* ============ STEP 2: STYLE ============ */
+function buildStyle(){
+  const g = $('#sGenre').value, bpm = $('#bpm').value, voc = $('#sVocal').value, mood = $('#sMood').value;
+  const inst = $$('#instChips .chip.on').map(c=>c.dataset.v);
+  const qual = $$('#qualChips .chip.on').map(c=>c.dataset.v);
+  const s = [g, voc, bpm + ' BPM', ...inst, mood, ...qual].filter(Boolean).join(', ');
+  $('#styleOut').textContent = s;
+  store.style = s; store.bpm = bpm; save(); toast('Стиль собран');
+}
+$('#bpm').oninput = ()=>{ $('#bpmVal').textContent = $('#bpm').value; };
+$('#genStyle').onclick = buildStyle;
+$('#copyStyle').onclick = ()=>clip($('#styleOut').textContent);
+
+let tries = store.tries || 0;
+function updTries(){
+  $('#tryNum').textContent = tries;
+  const left = Math.max(0, 10 - tries);
+  const el = $('#tryLeft'); el.textContent = left;
+  el.className = left > 4 ? 'g' : (left > 0 ? 'y' : 'r');
+  store.tries = tries; save();
+}
+$('#tryPlus').onclick = ()=>{ tries++; updTries(); };
+$('#tryMinus').onclick = ()=>{ tries = Math.max(0, tries-1); updTries(); };
+$('#tryReset').onclick = ()=>{ tries = 0; updTries(); };
+updTries();
+
+/* ============ STEP 3: STORYBOARD ============ */
+let scenes = [];
+const stylePair = ()=>{ const v = $('#gStyle').value.split('|'); return {en:v[0], ru:v[1]}; };
+const lightPair = ()=>{ const v = $('#gLight').value.split('|'); return {en:v[0], ru:v[1]}; };
+const palPair   = ()=>{ const v = $('#gPal').value.split('|');   return {en:v[0], ru:v[1]}; };
+function hintFor(line){
+  const l = line.toLowerCase(); const bank = [];
+  if(/ноч|звёзд|звезд|луна|сон/.test(l)) bank.push('ночная сцена, звёздное небо, мягкий свет');
+  if(/мор|волн|берег|пляж/.test(l)) bank.push('морской берег, волны, пена, простор');
+  if(/дорог|путь|идёт|идет|бег|лет|ветер/.test(l)) bank.push('движение по дороге, размытый фон, динамика');
+  if(/город|улиц|окн|фонар|дом/.test(l)) bank.push('городской пейзаж, свет окон, фонари');
+  if(/свет|рассвет|закат|утр|солнц/.test(l)) bank.push('яркий источник света, лучи, контровой свет');
+  if(/любов|сердц|вмест|рука|объят/.test(l)) bank.push('два героя рядом, крупный план рук, тепло');
+  if(/дожд|снег|зим|осен/.test(l)) bank.push('атмосферные осадки, частицы в воздухе');
+  if(!bank.length) bank.push('метафоричный образ строки: ' + (line.slice(0,40) || 'абстрактная композиция'));
+  return bank.join('; ');
+}
+function scenePrompt(sc){
+  const st = stylePair(), li = lightPair(), pa = palPair();
+  const hero = $('#gHero').value.trim(), ratio = $('#gRatio').value, neg = $('#gNeg').checked, dual = $('#gDual').value;
+  const planRu = {close:'крупный план', mid:'средний план', wide:'общий план', aerial:'вид сверху'}[sc.plan] || 'средний план';
+  const planEn = {close:'close-up shot', mid:'medium shot', wide:'wide shot', aerial:'aerial view'}[sc.plan] || 'medium shot';
+  let ru = '', en = '';
+  if(dual !== 'en'){
+    ru = `${sc.desc || sc.line}. Стиль: ${st.ru}. План: ${planRu}.`;
+    if(hero) ru += ` Герой: ${hero}.`;
+    ru += ` Свет: ${li.ru}. Палитра: ${pa.ru}. Качество: высокая детализация, кинематографично, композиция по правилу третей. Формат: ${ratio}.`;
+    if(neg) ru += `\nНегативный промпт: текст, буквы, цифры, водяные знаки, логотипы, лишние пальцы, деформации лица, размытость, шум, низкое качество.`;
+  }
+  if(dual !== 'ru'){
+    en = `${sc.desc || sc.line}. Style: ${st.en}. Shot: ${planEn}.`;
+    if(hero) en += ` Subject: ${hero}.`;
+    en += ` Lighting: ${li.en}. Palette: ${pa.en}. Quality: highly detailed, cinematic, rule of thirds. Aspect ratio: ${ratio}.`;
+    if(neg) en += `\nNegative prompt: text, letters, numbers, watermark, logo, extra fingers, deformed face, blurry, noise, low quality.`;
+  }
+  return [ru, en].filter(Boolean).join('\n\n');
+}
+function motionPromptFor(sc){
+  const cam = $('#mCam').value.split('|'), sub = $('#mSub').value.split('|'), intr = $('#mInt').value.split('|');
+  let ru = `${cam[1]}, ${sub[1]}. ${intr[1]}. Длительность: ${sc.dur} секунд.`;
+  let en = `${cam[0]}, ${sub[0]}. ${intr[0]}. Duration: ${sc.dur} seconds, seamless, stable motion.`;
+  if($('#mKeep').checked){
+    ru += ' Сохрани лицо, пропорции, композицию, цвета и стиль исходного изображения без изменений, без деформаций, без появления текста и логотипов.';
+    en += ' Keep the face, proportions, composition, colors and style of the source image unchanged, no deformation, no text, no logo.';
+  }
+  if($('#mLoop').checked){ ru += ' Бесшовная петля.'; en += ' Seamless loop.'; }
+  const d = $('#gDual').value;
+  return d === 'ru' ? ru : (d === 'en' ? en : ru + '\n\n' + en);
+}
+const PLANS = [['close','крупный'],['mid','средний'],['wide','общий'],['aerial','сверху']];
+function buildScenes(){
+  const raw = $('#sbLyrics').value.trim();
+  if(!raw){ toast('Вставь текст песни'); return; }
+  scenes = []; let section = '', n = 0;
+  raw.split('\n').forEach(ln=>{
+    const t = ln.trim(); if(!t) return;
+    const m = t.match(/^\[(.+)\]$/);
+    if(m){ section = m[1]; return; }
+    if(/^\(.+\)$/.test(t)) return;
+    n++; scenes.push({i:n, line:t, section:section||'', desc:'', plan:'mid', dur:5, anim:true});
+  });
+  store.sbLyrics = raw; save();
+  renderScenes();
+  $('#scenesWrap').style.display = 'block';
+  toast('Сцен создано: ' + scenes.length);
+}
+function renderScenes(){
+  const wrap = $('#scenes'); wrap.innerHTML = '';
+  const colors = ['#a78bfa','#67e8f9','#f9a8d4','#6ee7b7','#fcd34d','#93c5fd','#fca5a5','#c4b5fd'];
+  scenes.forEach((sc, idx)=>{
+    const el = document.createElement('div'); el.className = 'scene'; el.id = 'scene-'+sc.i;
+    el.style.borderLeft = '3px solid ' + colors[idx % colors.length];
+    const plans = PLANS.map(p=>`<option value="${p[0]}" ${sc.plan===p[0]?'selected':''}>${p[1]}</option>`).join('');
+    el.innerHTML = `
+      <div class="scene-h">
+        <span class="snum">${String(sc.i).padStart(2,'0')}</span>
+        <span class="lyr">${escapeHtml(sc.line)} <span class="syl">· ${lineSyl(sc.line)} сл</span></span>
+        ${sc.section ? `<span class="sect-tag">${escapeHtml(sc.section)}</span>` : ''}
+      </div>
+      <div class="row">
+        <div style="grid-column:1/-1"><label class="f">Что происходит в кадре</label>
+          <input type="text" class="s-desc" placeholder="${escapeHtml(hintFor(sc.line))}" value="${escapeHtml(sc.desc)}"></div>
+        <div><label class="f">План</label><select class="s-plan">${plans}</select></div>
+        <div><label class="f">Длительность, с</label><input type="number" class="s-dur" min="1" max="30" value="${sc.dur}"></div>
+        <div><label class="f">Оживлять?</label><select class="s-anim"><option value="1" ${sc.anim?'selected':''}>да, видео</option><option value="0" ${!sc.anim?'selected':''}>нет, статика + наезд</option></select></div>
+      </div>
+      <div class="btnrow">
+        <button class="btn sm s-gen">⚡ Промпт кадра</button>
+        <button class="btn sm s-copy">Копировать</button>
+        <button class="btn sm s-mo">🎥 Промпт движения</button>
+      </div>
+      <div class="out s-out" style="display:none"><pre></pre></div>`;
+    wrap.appendChild(el);
+    const descI = $('.s-desc', el), planI = $('.s-plan', el), durI = $('.s-dur', el), animI = $('.s-anim', el);
+    const sync = ()=>{ sc.desc = descI.value; sc.plan = planI.value; sc.dur = Math.max(1, parseInt(durI.value||'1',10)); sc.anim = animI.value==='1'; saveScenes(); renderTimeline(); };
+    descI.oninput = sync; planI.onchange = sync; durI.onchange = sync; animI.onchange = sync;
+    $('.s-gen', el).onclick = ()=>{ sync(); $('.s-out', el).style.display='block'; $('pre', $('.s-out', el)).textContent = scenePrompt(sc); };
+    $('.s-copy', el).onclick = ()=>{ sync(); clip(scenePrompt(sc)); };
+    $('.s-mo', el).onclick = ()=>{ sync(); $('.s-out', el).style.display='block'; $('pre', $('.s-out', el)).textContent = motionPromptFor(sc); };
+  });
+  saveScenes(); renderTimeline();
+}
+function saveScenes(){
+  store.scenes = scenes.map(s=>({i:s.i,line:s.line,section:s.section,desc:s.desc,plan:s.plan,dur:s.dur,anim:s.anim}));
+  save();
+  const total = scenes.reduce((a,s)=>a+(+s.dur||0),0);
+  $('#sceneCount').textContent = scenes.length + ' сцен';
+  $('#sumDur').textContent = total + ' с';
+  $('#avgDur').textContent = scenes.length ? (total/scenes.length).toFixed(1)+' с' : '0 с';
+  $('#animCount').textContent = scenes.filter(s=>s.anim).length;
+}
+function renderTimeline(){
+  const tl = $('#timeline'); tl.innerHTML = '';
+  const colors = ['#a78bfa','#67e8f9','#f9a8d4','#6ee7b7','#fcd34d','#93c5fd','#fca5a5','#c4b5fd'];
+  scenes.forEach((sc,idx)=>{
+    const d = document.createElement('div'); d.className='tlseg';
+    d.style.flex = sc.dur + ' 1 0';
+    d.style.background = colors[idx % colors.length];
+    d.textContent = sc.dur >= 4 ? sc.i : '';
+    d.title = `Сцена ${sc.i} · ${sc.dur} с · ${sc.line}`;
+    d.onclick = ()=>{
+      const c = $('#scene-'+sc.i); if(!c) return;
+      c.scrollIntoView({behavior:'smooth', block:'center'});
+      c.classList.add('flash'); setTimeout(()=>c.classList.remove('flash'), 1600);
+    };
+    tl.appendChild(d);
+  });
+}
+$('#buildScenes').onclick = buildScenes;
+$('#sbDemo').onclick = ()=>{ $('#sbLyrics').value = DEMO; buildScenes(); };
+$('#takeFrom1').onclick = ()=>{
+  const t = markedText() || $('#lyrIn').value || '';
+  if(!t.trim()){ toast('Сначала вставь текст в Шаге 1 → вкладка «Разметка ударений»'); return; }
+  $('#sbLyrics').value = t; buildScenes();
+};
+$('#copyAllPrompts').onclick = ()=>{
+  if(!scenes.length){ toast('Сначала построй раскадровку'); return; }
+  let out = 'РАСКАДРОВКА КЛИПА\n\n';
+  scenes.forEach(sc=>{ out += `Сцена ${sc.i} [${sc.section||'—'}] · ${sc.dur} с · ${sc.anim?'оживляем':'статика'}\nСтрока: ${sc.line}\n${scenePrompt(sc)}\n\n`; });
+  clip(out);
+};
+$('#dlScenesTxt').onclick = ()=>{
+  let out = 'РАСКАДРОВКА КЛИПА\nСтиль: ' + stylePair().ru + ' | Формат: ' + $('#gRatio').value + '\n\n';
+  scenes.forEach(sc=>{ out += `--- Сцена ${sc.i} (${sc.section||'—'}) ---\nСтрока: ${sc.line}\nПлан: ${sc.plan} · Длительность: ${sc.dur} с · Оживление: ${sc.anim?'да':'нет'}\nПРОМПТ КАРТИНКИ:\n${scenePrompt(sc)}\nПРОМПТ ДВИЖЕНИЯ:\n${motionPromptFor(sc)}\n\n`; });
+  download('storyboard.txt', out);
+};
+$('#dlScenesJson').onclick = ()=>{
+  const data = scenes.map(sc=>({scene:sc.i, section:sc.section, lyric:sc.line, shot:sc.plan, duration_sec:sc.dur, animate:sc.anim, image_prompt:scenePrompt(sc), motion_prompt:motionPromptFor(sc)}));
+  download('storyboard.json', JSON.stringify(data, null, 2), 'application/json');
+};
+$('#fillAll').onclick = ()=>{
+  if(!scenes.length){ toast('Сначала построй раскадровку'); return; }
+  scenes.forEach((sc,idx)=>{ if(!sc.desc){ sc.desc = hintFor(sc.line).split(';')[0]; sc.plan = ['wide','mid','close','mid'][idx%4]; } });
+  renderScenes(); toast('Подсказки подставлены — отредактируй под себя');
+};
+['#gStyle','#gRatio','#gLight','#gPal','#gDual','#gNeg'].forEach(s=>{ const el=$(s); if(el) el.addEventListener('change', ()=>{ if(scenes.length) renderScenes(); }); });
+$('#gHero').addEventListener('input', ()=>{ clearTimeout(window._ht); window._ht = setTimeout(()=>{ if(scenes.length) renderScenes(); }, 700); });
+
+/* ============ STEP 4: MOTION ============ */
+function genMotion(){
+  const cam = $('#mCam').value.split('|'), sub = $('#mSub').value.split('|'), intr = $('#mInt').value.split('|'), dur = $('#mDur').value;
+  let ru = `${cam[1]}, ${sub[1]}. ${intr[1]}. Длительность: ${dur}.`;
+  let en = `${cam[0]}, ${sub[0]}. ${intr[0]}. Duration: ${dur}.`;
+  if($('#mKeep').checked){
+    ru += '\nСохрани лицо, пропорции, композицию, цвета и стиль исходного изображения без изменений. Без деформаций, без появления текста, логотипов и новых объектов.';
+    en += '\nKeep the face, proportions, composition, colors and style of the source image unchanged. No deformation, no text, no logos, no new objects.';
+  }
+  if($('#mLoop').checked){ ru += '\nДвижение должно замыкаться в бесшовную петлю.'; en += '\nThe motion must form a seamless loop.'; }
+  const d = $('#gDual').value;
+  const txt = d==='ru' ? ru : (d==='en' ? en : ru + '\n\n' + en);
+  $('#motionOut').textContent = txt; store.motion = txt; save(); toast('Промпт движения собран');
+}
+$('#genMotion').onclick = genMotion;
+$('#copyMotion').onclick = ()=>clip($('#motionOut').textContent);
+
+/* ============ STEP 5: TIMING ============ */
+function calc(){
+  const dur = Math.max(1, parseFloat($('#songDur').value)||150);
+  const bpm = Math.max(40, parseFloat($('#songBpm').value)||90);
+  const n = Math.max(1, parseInt($('#sceneNum').value)||16);
+  const div = parseInt($('#beatDiv').value,10);
+  const beat = 60/bpm, bar = beat*4, clipLen = beat*div, avg = dur/n;
+  const scenesNeeded = Math.ceil(dur/clipLen);
+  let verdict, cls = 'g';
+  if(Math.abs(avg-clipLen) <= clipLen*0.35){ verdict = 'Отлично: средняя длина кадра почти совпадает с музыкальной сеткой — смена кадров будет попадать на долю.'; }
+  else if(avg > clipLen){ verdict = `Кадр в среднем длиннее музыкального блока (${avg.toFixed(1)} с против ${clipLen.toFixed(1)} с). Клип будет «тянуться»: добавь сцены или делай срезы внутри кадра.`; cls='y'; }
+  else { verdict = `Кадр короче музыкального блока (${avg.toFixed(1)} с против ${clipLen.toFixed(1)} с). Нарезка получится очень быстрой — проверь, что в припеве это уместно.`; cls='y'; }
+  $('#calcOut').innerHTML = `
+    <div><b>${clipLen.toFixed(2)} с</b><span>рекоменд. длина кадра</span></div>
+    <div><b>${bar.toFixed(2)} с</b><span>длина такта</span></div>
+    <div><b class="${cls}">${avg.toFixed(2)} с</b><span>средний кадр сейчас</span></div>
+    <div><b>${scenesNeeded}</b><span>сцен нужно под сетку</span></div>
+    <div><b>${dur.toFixed(0)} с</b><span>длительность песни</span></div>`;
+  $('#calcAdvice').innerHTML = `<b>Вывод.</b> ${verdict}<br><b>План:</b> куплет — кадр ${clipLen.toFixed(1)} с, припев — ${(clipLen/2).toFixed(1)} с (вдвое быстрее), бридж — ${(clipLen*2).toFixed(1)} с одним длинным планом. Всего ≈ ${scenesNeeded} сцен на песню ${Math.floor(dur/60)}:${String(Math.round(dur%60)).padStart(2,'0')}.`;
+  store.calc = {dur, bpm, n, div}; save();
+}
+$('#calcRun').onclick = calc;
+['#songDur','#songBpm','#sceneNum','#beatDiv'].forEach(s=>$(s).addEventListener('change', calc));
+$('#applyToScenes').onclick = ()=>{
+  if(!scenes.length){ toast('Сначала построй раскадровку в Шаге 3'); return; }
+  const bpm = Math.max(40, parseFloat($('#songBpm').value)||90);
+  const div = parseInt($('#beatDiv').value,10);
+  const len = Math.max(2, Math.round((60/bpm)*div));
+  scenes.forEach(sc=>{
+    const isChorus = /chorus|припев/i.test(sc.section), isBridge = /bridge|бридж/i.test(sc.section);
+    sc.dur = isBridge ? len*2 : (isChorus ? Math.max(2, Math.round(len/2)) : len);
+  });
+  renderScenes(); go('step3'); toast('Длительности сцен выставлены по сетке');
+};
+
+/* ============ QUIZ ============ */
+const QUIZ = [
+  {q:'Что нужно сделать с текстом ПЕРЕД загрузкой в Suno?', o:['Перевести на английский','Выровнять ритм строк и проверить ударения','Удалить все метки структуры','Добавить как можно больше сложных слов'], a:1, e:'Ровный размер строк и правильные ударения — главная профилактика «кривого» вокала. Метки структуры, наоборот, нужны.'},
+  {q:'Suno спела «звОнит» вместо «звонИт». Что логичнее сделать сначала?', o:['Сменить жанр на рок','Повысить BPM до 160','Разбить слово по слогам или заменить его синонимом','Удалить слово из текста навсегда'], a:2, e:'Пишут «зво-ни́т», ставят знак ударения или заменяют слово. Стиль чаще всего ни при чём.'},
+  {q:'Зачем всем кадрам клипа один и тот же «суффикс стиля»?', o:['Чтобы сэкономить кредиты','Чтобы клип выглядел цельным, а не набором разных картинок','Так требует Suno','Чтобы картинки весили меньше'], a:1, e:'Единый стиль, свет и палитра — то, что отличает клип от слайд-шоу случайных изображений.'},
+  {q:'Песня длится 150 секунд, клип по 5 секунд. Сколько нужно сцен примерно?', o:['10','20','30','50'], a:2, e:'150 / 5 = 30 сцен. Часть можно повторить с другим движением или заменить статикой с наездом.'},
+  {q:'Где в конвейере работает Алиса по плану?', o:['Только пишет текст','Пишет текст, генерирует картинки и оживляет их','Только монтирует видео','Только поёт вокал'], a:1, e:'Алиса и Шедеврум закрывают сразу несколько шагов: текст, изображения и оживление кадров.'},
+  {q:'Какое движение камеры лучше подходит для строки «мы уходим всё дальше»?', o:['Резкий зум на лицо','Медленный отъезд (pull back)','Статичный кадр без движения','Быстрая панорама влево-вправо'], a:1, e:'Движение должно совпадать со смыслом строки: «уходим дальше» → камера отдаляется.'},
+  {q:'Что чаще всего делает монтаж клипа «дешёвым» на вид?', o:['Обычные склейки (cut)','Много разных «красивых» переходов','Единый цветовой стиль','Смена кадра на сильную долю'], a:1, e:'90% срезов — обычный cut. Crossfade — только на смене частей песни. Эффектные переходы быстро устаревают.'},
+  {q:'Чьи стихи можно брать в клип без разрешения?', o:['Любого поэта, если указать имя','Автора, умершего более 70 лет назад (общественное достояние)','Только свои собственные','Любые, если клип бесплатный'], a:1, e:'Общественное достояние — обычно 70 лет после смерти автора. Для современных поэтов нужно разрешение, даже если клип некоммерческий.'}
+];
+function renderQuiz(){
+  const box = $('#quizBox'); box.innerHTML = '';
+  QUIZ.forEach((item, qi)=>{
+    const d = document.createElement('div'); d.className = 'q';
+    d.innerHTML = `<h4>${qi+1}. ${escapeHtml(item.q)}</h4>` + item.o.map((op,oi)=>
+      `<label class="opt" data-qi="${qi}" data-oi="${oi}"><input type="radio" name="q${qi}" value="${oi}"><span>${escapeHtml(op)}</span></label>`).join('') +
+      `<div class="exp" id="exp${qi}"></div>`;
+    box.appendChild(d);
+  });
+}
+renderQuiz();
+$('#quizCheck').onclick = ()=>{
+  let score = 0, answered = 0;
+  QUIZ.forEach((item, qi)=>{
+    const sel = $(`input[name="q${qi}"]:checked`);
+    $$('.opt[data-qi="'+qi+'"]').forEach(o=>o.classList.remove('right','wrong'));
+    const e = $('#exp'+qi);
+    if(sel){
+      answered++;
+      const oi = parseInt(sel.value,10);
+      $(`.opt[data-qi="${qi}"][data-oi="${item.a}"]`).classList.add('right');
+      if(oi === item.a) score++; else $(`.opt[data-qi="${qi}"][data-oi="${oi}"]`).classList.add('wrong');
+      e.textContent = (oi === item.a ? '✓ Верно. ' : '✗ Неверно. ') + item.e;
+    } else e.textContent = 'Нет ответа. ' + item.e;
+    e.classList.add('on');
+  });
+  const res = $('#quizRes'); res.style.display = 'block';
+  const pass = score >= 6;
+  res.innerHTML = `<h3><span class="ico">${pass?'🏆':'📖'}</span>Результат: ${score} из ${QUIZ.length}</h3>
+    <p style="color:var(--mut);margin-top:0">${pass
+      ? 'Отлично! Ты готов собрать клип самостоятельно. Переходи к чек-листу проекта и начинай с Шага 1.'
+      : 'Стоит вернуться к теории: перечитай вкладки «Теория и чек-лист» в Шаге 1 и «Прослушивание» в Шаге 2, затем пройди тест ещё раз.'} ${answered<QUIZ.length?`Отвечено на ${answered} из ${QUIZ.length}.`:''}</p>
+    <div class="stat"><div><b class="${pass?'g':'y'}">${Math.round(score/QUIZ.length*100)}%</b><span>правильных</span></div><div><b>${QUIZ.length-score}</b><span>ошибок</span></div><div><b>6</b><span>проходной балл</span></div></div>`;
+  store.quiz = score; save();
+  res.scrollIntoView({behavior:'smooth', block:'center'});
+  toast('Проверено: ' + score + ' из ' + QUIZ.length);
+};
+$('#quizReset').onclick = ()=>{
+  $$('input[type=radio]').forEach(r=>r.checked = false);
+  $$('.opt').forEach(o=>o.classList.remove('right','wrong'));
+  $$('.exp').forEach(e=>e.classList.remove('on'));
+  $('#quizRes').style.display = 'none'; toast('Тест сброшен');
+};
+
+/* ============ EXPORT PLAN ============ */
+function buildPlan(){
+  const total = scenes.reduce((a,s)=>a+(+s.dur||0),0);
+  let p = '════ ПЛАН ПРОЕКТА МУЗЫКАЛЬНОГО КЛИПА ════\nСформирован в «КлипМастер» · готовность ' + progress() + '%\n\n';
+  p += '── ШАГ 1. ТЕКСТ ПЕСНИ ──\n';
+  p += 'Промпт для нейросети:\n' + ($('#textOut').textContent.startsWith('Нажми') ? '(не заполнен)' : $('#textOut').textContent) + '\n\n';
+  p += 'Текст песни:\n' + (($('#lyrIn').value || '').trim() || '(не вставлен)') + '\n';
+  const marked = markedText();
+  if(marked && marked !== $('#lyrIn').value) p += '\nВерсия с ударениями:\n' + marked + '\n';
+  p += '\n── ШАГ 2. ПЕСНЯ (SUNO) ──\n';
+  p += 'Styles of Music: ' + ($('#styleOut').textContent.startsWith('Нажми') ? '(не заполнен)' : $('#styleOut').textContent) + '\n';
+  p += 'Сделано генераций: ' + tries + '\n';
+  p += 'Заметки: ' + (($('#tryNotes').value||'').trim() || '—') + '\n';
+  p += 'Проблемные таймкоды: ' + (($('#marks').value||'').trim() || '—') + '\n';
+  p += '\n── ШАГ 3–4. РАСКАДРОВКА (' + scenes.length + ' сцен, суммарно ' + total + ' с) ──\n';
+  p += 'Общий стиль: ' + stylePair().ru + ' | Формат: ' + $('#gRatio').value + ' | Свет: ' + lightPair().ru + ' | Палитра: ' + palPair().ru + '\n';
+  p += 'Герой: ' + ($('#gHero').value.trim() || '—') + '\n\n';
+  scenes.forEach(sc=>{
+    p += `Сцена ${sc.i} [${sc.section||'—'}] · ${sc.dur} с · ${sc.anim?'оживляем':'статика + наезд'}\n`;
+    p += `Строка: ${sc.line}\nПРОМПТ КАРТИНКИ:\n${scenePrompt(sc)}\nПРОМПТ ДВИЖЕНИЯ:\n${motionPromptFor(sc)}\n\n`;
+  });
+  p += '── ШАГ 5. МОНТАЖ ──\n';
+  p += 'Песня: ' + $('#songDur').value + ' с · темп ' + $('#songBpm').value + ' BPM · смена кадра каждые ' + $('#beatDiv').value + ' долей\n';
+  p += 'Расчёт: ' + $('#calcAdvice').textContent.replace(/\s+/g,' ').trim() + '\n';
+  p += 'Экспорт: H.264, MP4, 1080p, 30/60 fps, 8–12 Мбит/с, AAC 256–320 kbps\n\n';
+  p += '── ЧЕК-ЛИСТ ──\n';
+  $$('input[data-chk]').forEach(cb=>{
+    const span = cb.closest('.chk') ? cb.closest('.chk').querySelector('span') : null;
+    p += (cb.checked ? '[x] ' : '[ ] ') + (span ? span.textContent : cb.dataset.chk) + '\n';
+  });
+  p += '\n── БЕСПЛАТНЫЕ СЕРВИСЫ (АДРЕСА) ──\n';
+  TOOLS.forEach(t=>{ p += `• ${t.n} — ${t.u}\n  ${t.d}\n`; });
+  return p;
+}
+$('#exportAll').onclick = ()=>download('clip-plan.txt', buildPlan());
+$('#exportAll2').onclick = ()=>download('clip-plan.txt', buildPlan());
+$('#copyPlan').onclick = ()=>clip(buildPlan());
+
+/* ============ RESTORE ============ */
+function restore(){
+  if(store.textPrompt) $('#textOut').textContent = store.textPrompt;
+  if(store.style) $('#styleOut').textContent = store.style;
+  if(store.motion) $('#motionOut').textContent = store.motion;
+  if(store.lyrics){
+    $('#lyrIn').value = store.lyrics; tokenize(store.lyrics);
+    if(store.accents) accents = store.accents;
+    renderAccentView(); renderRhythm();
+  }
+  if(store.sbLyrics) $('#sbLyrics').value = store.sbLyrics;
+  if(store.notes) $('#tryNotes').value = store.notes;
+  if(store.marks) $('#marks').value = store.marks;
+  if(store.calc){ $('#songDur').value = store.calc.dur; $('#songBpm').value = store.calc.bpm; $('#sceneNum').value = store.calc.n; $('#beatDiv').value = store.calc.div; }
+  if(store.scenes && store.scenes.length){ scenes = store.scenes; renderScenes(); $('#scenesWrap').style.display = 'block'; }
+  calc();
+  if(store.page && $('#page-'+store.page)) go(store.page);
+}
+$('#tryNotes').addEventListener('input', e=>{ store.notes = e.target.value; save(); });
+$('#marks').addEventListener('input', e=>{ store.marks = e.target.value; save(); });
+$('#lyrIn').addEventListener('input', e=>{ store.lyrics = e.target.value; save(); });
+$('#sbLyrics').addEventListener('input', e=>{ store.sbLyrics = e.target.value; save(); });
+
+/* ============ INIT ============ */
+$('#bpmVal').textContent = $('#bpm').value;
+buildTextPrompt(); buildStyle(); restore();
+</script>
+</body>
+</html>
